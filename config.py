@@ -4,4 +4,4 @@ class Config(object):
     # LOCAL_HOST_ADDRESS = '192.168.1.133:8001'
     LOCAL_HOST_ADDRESS = 'www.pcos.reohealth.cn:8080'
     # MIDDLE_HOST_ADDRESS = '192.168.1.202:8002'
-    MIDDLE_HOST_ADDRESS = 'www.pcos_mid.reohealth.cn'
+    MIDDLE_HOST_ADDRESS = 'www.pcos_mid.reohealth.cn:8080'
