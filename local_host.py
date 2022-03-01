@@ -12,8 +12,9 @@ def hello_world():
 
 @app.route("/t11")
 def hello_world2():
-    with open('test.xml') as fh:
+    with open('test.xml',encoding='utf-8') as fh:
         tree = fh.read()
+        print('-------')
     requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/host2server', data=tree.encode('utf-8'))
     return "<p>Hello, World!</p>"
 
