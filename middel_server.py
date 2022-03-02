@@ -36,7 +36,7 @@ def server2host():
     ip = request.remote_addr
     print('get a remote connect,ip is: '+ip)
     #if ip == f'{Config.REMOTE_SERVER_ADDRESS}'.split(':')[0]:
-    print(request.data)
+    print(request.data.decode('utf-8'))
     logger.info(ip)
     headers={
           "content-type": "text/xml; charset=utf-8"
