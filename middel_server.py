@@ -21,19 +21,28 @@ def host2server():
     ip = request.remote_addr
     print('get a local connect,ip is: '+ip)
     print(ip)
-    if ip == f'{Config.LOCAL_HOST_ADDRESS}'.split(':')[0]:
-        logger.info(id)
-        requests.post(f'http://{Config.REMOTE_SERVER_ADDRESS}/send2server',data=request.data)
+    #if ip == f'{Config.LOCAL_HOST_ADDRESS}'.split(':')[0]:
+    logger.info(id)
+    print(request.data.decode('utf-8'))
+    headers={
+          "content-type": "text/xml; charset=utf-8"
+    }
+    #requests.post(f'http://{Config.REMOTE_SERVER_ADDRESS}/send2server',data=request.data.encode('utf-8'),headers=headers)
+    requests.post(f'http://{Config.REMOTE_SERVER_ADDRESS}/send2server',data=request.data,headers=headers)
     return "<p>Hello, World! t33 </p>"
 
 @app.route("/server2host",methods=['POST'])
 def server2host():
     ip = request.remote_addr
     print('get a remote connect,ip is: '+ip)
-    if ip == f'{Config.REMOTE_SERVER_ADDRESS}'.split(':')[0]:
-        logger.info(ip)
-        #logger.info(request.environ.get('HTTP_X_REAL_IP', request.remote_addr) )
-        requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/send2host',data=request.data)
+    #if ip == f'{Config.REMOTE_SERVER_ADDRESS}'.split(':')[0]:
+    print(request.data)
+    logger.info(ip)
+    headers={
+          "content-type": "text/xml; charset=utf-8"
+    }
+    #logger.info(request.environ.get('HTTP_X_REAL_IP', request.remote_addr) )
+    requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/send2host',data=request.data,headers=headers)
     return "<p>Hello, World! send2host</p>"
 
 @app.route("/update_code",methods=['POST'])
