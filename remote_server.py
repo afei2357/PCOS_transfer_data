@@ -102,7 +102,10 @@ def send2server():
 def test_server2host():
     with open('test.xml') as fh:
         tree = fh.read()
-    requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/server2host', data=tree.encode('utf-8'))
+    headers={
+          "content-type": "text/xml; charset=utf-8"
+    }
+    requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/server2host', data=tree.encode('utf-8'),headers=headers)
     return "<p>server2host!</p>"
 
 if __name__ == '__main__':

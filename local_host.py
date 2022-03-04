@@ -79,17 +79,20 @@ def hello_world2():
     with open('test.xml',encoding='utf-8') as fh:
         tree = fh.read()
         print('-------')
-    requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/host2server', data=tree.encode('utf-8'))
+    headers={
+          "content-type": "text/xml; charset=utf-8"
+    }
+    requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/host2server', data=tree.encode('utf-8'),headers=headers)
     return "<p>Hello, World!</p>"
 
 @app.route("/send2host",methods=['POST'])
 def send2server():
     print('request.data -----1')
-    print(request.data)
-    print('request.get_data() -----2')
-    print(request.get_data())
-    print('request.values -----3')
-    print(request.values)
+    print(request.data.decode('utf-8'))
+    #print('request.get_data() -----2')
+    #print(request.get_data())
+    #print('request.values -----3')
+    #print(request.values)
     #requests.post('192.168.1.202:8000')
     ip = request.remote_addr
     print('the id is : ------4')
