@@ -77,7 +77,7 @@ XML 文档字符串
 '''
 @app.route("/UploadLisRepData")
 def UploadLisRepData():
-    with open('test.xml') as fh:
+    with open('test.xml',encoding='utf-8') as fh:
         tree = fh.read()
     UploadLisRepDataRequest_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/server2host_UploadLisRepData', data=tree.encode('utf-8'))
     return UploadLisRepDataRequest_info.text

@@ -66,7 +66,7 @@ def UploadLisRepData():
     print('get a data from hospital  with api of UploadLisRepData')
     #requests.get('192.168.1.202:8000')
     print('1request.args-------')
-    print(request.data)
+    print(request.data.decode('utf-8'))
     return 'this is local host ,finish UploadLisRepData '
 
 @app.route("/t1")
