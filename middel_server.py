@@ -16,14 +16,15 @@ LIS 将核收到的病人信息和医嘱信息，第三方外送检验机构通�
 @app.route("/GetLisRequest",methods=['POST'])
 def GetLisRequest():
     ip = request.remote_addr
-    print('get a remote connect,ip is: '+ip)
-    logger.info(ip)
+    #logger.info(ip)
 #    if ip == f'{Config.REMOTE_SERVER_ADDRESS}'.split(':')[0]:
-#    logger.info(ip)
+    logger.info('get a connection ip is :'+ip)
     #logger.info(request.environ.get('HTTP_X_REAL_IP', request.remote_addr) )
-    print(request.data)
-    request_patient_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/GetLisRequest',data=request.data,header=request.headers)
+#    print(request.data)
+    request_patient_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/GetLisRequest',data=request.data,headers=request.headers)
+#request_patient_info = requests.post(f'http://{ip}/GetLisRequest',data=request.data,headers=request.headers)
     print(request_patient_info.text)
+    print(request_patient_info.headers)
     return request_patient_info.text
 
 '''
@@ -35,10 +36,9 @@ AffirmRequest 接口发送确认获取成功的信息，参数：医院条码
 @app.route("/AffirmRequest",methods=['POST'])
 def AffirmRequest():
     ip = request.remote_addr
-    print('get a remote connect,ip is: '+ip)
+    logger.info('get a connection ip is :'+ip)
     print(request.data)
-    AffirmRequest_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/AffirmRequest',data=request.data,header=request.headers)
-    print(AffirmRequest_info.text)
+    AffirmRequest_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/AffirmRequest',data=request.data,headers=request.headers)
     return AffirmRequest_info.text
 
 #3 、AffirmRequestWithExtBarc
@@ -52,10 +52,10 @@ AffirmRequestWithExtBarcode 接口发送确认获取成功的信息，参数：�
 @app.route("/AffirmRequestWithExtBarcode",methods=['POST'])
 def AffirmRequestWithExtBarcode():
     ip = request.remote_addr
-    print('get a remote connect,ip is: '+ip)
+    logger.info('get a connection ip is :'+ip)
+    print(AffirmRequest_info.text)
     print(request.data)
     AffirmRequest_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/AffirmRequestWithExtBarcode',data=request.data,header=request.headers)
-    print(AffirmRequest_info.text)
     return AffirmRequest_info.text
 
 
@@ -70,8 +70,8 @@ XML 文档字符串
 @app.route("/UploadLisRepData",methods=['POST'])
 def UploadLisRepData():
     ip = request.remote_addr
-    print('get a remote connect,ip is: '+ip)
-    print(request.data.decode('utf-8'))
+    logger.info('get a connection ip is :'+ip)
+    print(AffirmRequest_info.text)
     UploadLisRepDataRequest_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/UploadLisRepData',data=request.data,header=request.headers)
 #    print(UploadLisRepDataRequest_info.text)
     return UploadLisRepDataRequest_info.text
@@ -82,6 +82,7 @@ def hello_world():
     #requests.get('192.168.1.202:8000')
     print(request.args)
     print(request.data)
+    print(request.headers)
     print(request.get_data())
     return "<p>Hello, World! t2 </p>"
 
@@ -90,7 +91,7 @@ def host2server():
     ip = request.remote_addr
     print('get a local connect,ip is: '+ip)
     #if ip == f'{Config.LOCAL_HOST_ADDRESS}'.split(':')[0]:
-    logger.info(id)
+#logger.info(id)
     #print(request.data.decode('utf-8'))
     headers={
           "content-type": "text/xml; charset=utf-8"
@@ -105,7 +106,7 @@ def server2host():
     print('get a remote connect,ip is: '+ip)
     #if ip == f'{Config.REMOTE_SERVER_ADDRESS}'.split(':')[0]:
     #print(request.data.decode('utf-8'))
-    logger.info(ip)
+#logger.info(ip)
     headers={
           "content-type": "text/xml; charset=utf-8"
     }
@@ -113,10 +114,6 @@ def server2host():
     #requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/send2host',data=request.data,headers=headers)
     requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/send2host',data=request.data)
     return "<p>the middle server get a connect, send2host, the ip is :</p>"+ ip
-
-@app.route("/update_code",methods=['POST'])
-def update_code():
-    pass
 
 
 def configure_logging(app):
