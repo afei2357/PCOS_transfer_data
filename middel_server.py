@@ -24,6 +24,7 @@ def ExtReportService():
 #    print(request.data)
     #response.encoding = 'gb2312'
     request_patient_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/ExtReportService.asmx',data=request.data,headers=request.headers)
+    print(request.headers)
     request_patient_info.encoding = 'utf-8'
     logger.info(request_patient_info.text)
     print(request_patient_info.text)
@@ -146,5 +147,8 @@ def configure_logging(app):
     if not os.path.exists('logs'):
         os.mkdir('logs')
 
+# waitress-serve --host=0.0.0.0 --port=4431 middel_server:app
 if __name__ == '__main__':
     app.run(port=4431,host='0.0.0.0',debug=True)
+
+
