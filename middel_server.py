@@ -1,4 +1,4 @@
-from flask import Flask
+﻿from flask import Flask
 from flask import jsonify,request
 import requests
 from config import Config
@@ -6,6 +6,32 @@ from extensions import logger
 
 
 app = Flask(__name__)
+
+# 1 、GetLisRequest  接口（获取标本信息）
+'''
+1 、GetLisRequest  接口（获取标本信息）
+LIS 将核收到的病人信息和医嘱信息，第三方外送检验机构通过“条码号”【参数：医院
+条码】从该接口获取 LIS 的病人信息和医嘱信息（XML 文档字符串)
+'''
+@app.route("/ExtReportService",methods=['POST'])
+def ExtReportService():
+    ip = request.remote_addr
+    #logger.info(ip)
+#    if ip == f'{Config.REMOTE_SERVER_ADDRESS}'.split(':')[0]:
+    logger.info('get a connection ip is :'+ip)
+    print('get a connection ip is :'+ip)
+    #logger.info(request.environ.get('HTTP_X_REAL_IP', request.remote_addr) )
+#    print(request.data)
+    #response.encoding = 'gb2312'
+    request_patient_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/ExtReportService.asmx',data=request.data,headers=request.headers)
+    request_patient_info.encoding = 'utf-8'
+    logger.info(request_patient_info.text)
+    print(request_patient_info.text)
+    logger.info(request_patient_info.headers)
+    return request_patient_info.text
+
+
+
 
 # 1 、GetLisRequest  接口（获取标本信息）
 '''
@@ -121,4 +147,4 @@ def configure_logging(app):
         os.mkdir('logs')
 
 if __name__ == '__main__':
-    app.run(port=8002,host='0.0.0.0',debug=True)
+    app.run(port=4431,host='0.0.0.0',debug=True)

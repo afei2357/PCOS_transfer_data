@@ -17,6 +17,58 @@ def hello_world():
     print(request.get_data())
     return "<p>Hello, World! t2 </p>"
 
+# 0 test
+@app.route("/ExtReportService")
+def ExtReportService():
+    print('get a data from hospital  with api of GetLisRequest')
+    #requests.get('192.168.1.202:8000')
+    # data = '''<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisItems xmlns="http://tempuri.org/" /></soap12:Body>/soap12:Envelope>'''
+    data = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisRequest xmlns="http://tempuri.org/"><hospSampleID>3142647053</hospSampleID></GetLisRequest></soap12:Body></soap12:Envelope>'
+    encode_data = data.encode('utf-8')
+    # print(data)
+    headers = {"Host": "10.10.11.196",
+            "Content-Type": "application/soap+xml; charset=UTF-8",
+            "Content-Length": str(len(encode_data)),
+            "SOAPAction": "http://tempuri.org/GetLisRequest"}
+    #patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data,headers=headers)
+    patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/ExtReportService', data=encode_data ,headers=headers)
+
+    print('patient_info.header----')
+    print(patient_info.headers)
+    print('patient_info.text----')    
+    print(patient_info.text)
+
+    return patient_info.text,200#,ret_header
+
+    
+
+@app.route("/test")
+def test():
+    print('get a data from hospital  with api of GetLisRequest')
+    #requests.get('192.168.1.202:8000')
+    data = '''<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisItems xmlns="http://tempuri.org/" /></soap12:Body>/soap12:Envelope>'''
+    encode_data = data.encode('utf-8')
+    # print(data)
+    headers = {"Host": "10.10.11.196",
+            "Content-Type": "application/soap+xml; charset=UTF-8",
+            "Content-Length": str(len(encode_data)),
+            "SOAPAction": "http://tempuri.org/AffirmRequest"}
+    #patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data,headers=headers)
+    patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data ,headers=headers)
+
+    print('patient_info.header----')
+    print(patient_info.headers)
+    print('patient_info.text----')    
+    print(patient_info.text)
+
+    # ret_header = patient_info.headers
+    # ret_header.pop('Date')
+    #ret_header.pop('Server')
+    # print(ret_header)
+    # return 'aaaaa'
+    return patient_info.text,200#,ret_header
+
+    
 # 1 、GetLisRequest  接口（获取标本信息）
 '''
 1 、GetLisRequest  接口（获取标本信息）
@@ -27,58 +79,56 @@ LIS 将核收到的病人信息和医嘱信息，第三方外送检验机构通�
 def GetLisRequest():
     print('get a data from hospital  with api of GetLisRequest')
     #requests.get('192.168.1.202:8000')
-    data = '''
-    <?xml version="1.0" encoding="utf-8"?>
-<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-  <soap12:Body>
-    <GetLisRequest xmlns="http://tempuri.org/">
-      <hospSampleID>string</hospSampleID>
-    </GetLisRequest>
-  </soap12:Body>
-</soap12:Envelope>
-    '''
+    # data = '''<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisItems xmlns="http://tempuri.org/" /></soap12:Body>/soap12:Envelope>'''
+    data = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisRequest xmlns="http://tempuri.org/"><hospSampleID>3142647053</hospSampleID></GetLisRequest></soap12:Body></soap12:Envelope>'
     encode_data = data.encode('utf-8')
-    print(data)
+    # print(data)
     headers = {"Host": "10.10.11.196",
             "Content-Type": "application/soap+xml; charset=UTF-8",
             "Content-Length": str(len(encode_data)),
-            "SOAPAction": "http://tempuri.org/AffirmRequest"}
-    patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/GetLisRequest', data=encode_data,headers=headers)
-    print('patient_info.text----')
+            "SOAPAction": "http://tempuri.org/GetLisRequest"}
+    #patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data,headers=headers)
+    patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/ExtReportService', data=encode_data ,headers=headers)
+
+    print('patient_info.header----')
     print(patient_info.headers)
-    ret_header = patient_info.headers
-    ret_header.pop('Date')
-    ret_header.pop('Server')
-    print(ret_header)
+    print('patient_info.text----')    
+    print(patient_info.text)
+
     return patient_info.text,200#,ret_header
+
+
 '''
 # 2 、AffirmRequest  接口（确认获取标本信息成功）
 # 第三方外送检验机构通过 GetLisRequest 接口成功获取病人信息和医嘱信息后，通过
 AffirmRequest 接口发送确认获取成功的信息，参数：医院条码
 调用方式：AffirmRequest(HospSampleID)
+返回乱码： 
+æå¡å¨æ æ³ä¸ºè¯·æ±æä¾æå¡ï¼å ä¸ºä¸æ¯æè¯¥åªä½ç±»åã
 '''
 @app.route("/AffirmRequest")
 def AffirmRequest():
     print('get a data from hospital  with api of GetLisRequest')
     #requests.get('192.168.1.202:8000')
-    print('1request.args-------')
-    print(request.args.get('HospSampleID'))
-    data = '''
-    <?xml version="1.0" encoding="utf-8"?>
-<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-  <soap12:Body>
-    <AffirmRequest xmlns="http://tempuri.org/">
-      <hospSampleID>string</hospSampleID>
-    </AffirmRequest>
-  </soap12:Body>
-</soap12:Envelope>
-    '''
+    print('get a data from hospital  with api of GetLisRequest')
+    #requests.get('192.168.1.202:8000')
+    # data = '''3542646409 3142647053 2842645034 '''
+    data = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><AffirmRequest xmlns="http://tempuri.org/"><hospSampleID>3542646409</hospSampleID></AffirmRequest></soap:Body></soap:Envelope>'
     encode_data = data.encode('utf-8')
-    headers = {"Content-Type": "application/soap+xml; charset=UTF-8",
+    # print(data)
+    headers = {"Host": "10.10.11.196",
+            "Content-Type": "application/soap+xml; charset=UTF-8",
             "Content-Length": str(len(encode_data)),
-            }
-    AffirmRequest_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/AffirmRequest', data=encode_data,headers=headers)
-    return AffirmRequest_info.text
+            "SOAPAction": "http://tempuri.org/GetLisRequest"}
+    #patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data,headers=headers)
+    patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/ExtReportService', data=encode_data ,headers=headers)
+
+    print('patient_info.header----')
+    print(patient_info.headers)
+    print('patient_info.text----')    
+    print(patient_info.text)
+
+    return patient_info.text,200#,ret_header
 
 
 #3 、AffirmRequestWithExtBarc
@@ -93,25 +143,23 @@ AffirmRequestWithExtBarcode 接口发送确认获取成功的信息，参数：�
 def AffirmRequestWithExtBarcode():
     print('get a data from hospital  with api of GetLisRequest')
     #requests.get('192.168.1.202:8000')
-    print('1request.args-------')
-    print(request.args.get('HospSampleID'))
-    data = '''
-    <?xml version="1.0" encoding="utf-8"?>
-<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-  <soap12:Body>
-    <AffirmRequestWithExtBarcodeResponse xmlns="http://tempuri.org/">
-      <AffirmRequestWithExtBarcodeResult>string</AffirmRequestWithExtBarcodeResult>
-    </AffirmRequestWithExtBarcodeResponse>
-  </soap12:Body>
-</soap12:Envelope>
-    '''
+    # data = '''<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisItems xmlns="http://tempuri.org/" /></soap12:Body>/soap12:Envelope>'''
+    data = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><AffirmRequestWithExtBarcode xmlns="http://tempuri.org/"><hospSampleID>3542646409</hospSampleID><extBarcode>test_extBarcode</extBarcode></AffirmRequestWithExtBarcode></soap:Body></soap:Envelope>'
     encode_data = data.encode('utf-8')
-    headers = {"Content-Type": "application/soap+xml; charset=UTF-8",
+    # print(data)
+    headers = {"Host": "10.10.11.196",
+            "Content-Type": "application/soap+xml; charset=UTF-8",
             "Content-Length": str(len(encode_data)),
-            }
-    return encode_data,200,headers 
-    AffirmRequest_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/server2host_AffirmRequestWithExtBarcode', data=encode_data)
-    return AffirmRequest_info.text
+            "SOAPAction": "http://tempuri.org/GetLisRequest"}
+    #patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data,headers=headers)
+    patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/ExtReportService', data=encode_data ,headers=headers)
+
+    print('patient_info.header----')
+    print(patient_info.headers)
+    print('patient_info.text----')    
+    print(patient_info.text)
+
+    return patient_info.text,200#,ret_header
 
 
 '''
@@ -124,26 +172,25 @@ XML 文档字符串
 '''
 @app.route("/UploadLisRepData")
 def UploadLisRepData():
-    with open('test.xml',encoding='utf-8') as fh:
-        tree = fh.read()
-    UploadLisRepDataRequest_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/server2host_UploadLisRepData', data=tree.encode('utf-8'))
-    data = '''
-    <?xml version="1.0" encoding="utf-8"?>
-<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-  <soap12:Body>
-    <UploadLisRepData xmlns="http://tempuri.org/">
-      <reportResult>string</reportResult>
-    </UploadLisRepData>
-  </soap12:Body>
-</soap12:Envelope>
-    '''
+    print('get a data from hospital  with api of GetLisRequest')
+    #requests.get('192.168.1.202:8000')
+    # data = '''<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisItems xmlns="http://tempuri.org/" /></soap12:Body>/soap12:Envelope>'''
+    data = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><UploadLisRepData xmlns="http://tempuri.org/"><reportResult>reportResult_requests</reportResult></UploadLisRepData></soap:Body></soap:Envelope>'
     encode_data = data.encode('utf-8')
-    headers = {"Content-Type": "application/soap+xml; charset=UTF-8",
+    # print(data)
+    headers = {"Host": "10.10.11.196",
+            "Content-Type": "application/soap+xml; charset=UTF-8",
             "Content-Length": str(len(encode_data)),
-            }
-    return encode_data,200,headers 
-    return UploadLisRepDataRequest_info.text
-#return "<p>server2host!</p>"
+            "SOAPAction": "http://tempuri.org/GetLisRequest"}
+    #patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data,headers=headers)
+    patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/ExtReportService', data=encode_data ,headers=headers)
+
+    print('patient_info.header----')
+    print(patient_info.headers)
+    print('patient_info.text----')    
+    print(patient_info.text)
+
+    return patient_info.text,200#,ret_header
 
 @app.route("/send2server",methods=['POST'])
 def send2server():
