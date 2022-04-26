@@ -8,6 +8,7 @@ from config import Config
 #模拟远程云服务器的环境
 app = Flask(__name__)
 
+
 @app.route("/t3")
 def hello_world():
     print('get a data ')
@@ -69,13 +70,13 @@ def test():
     return patient_info.text,200#,ret_header
 
     
-# 1 、GetLisRequest  接口（获取标本信息）
+# 1 、GetLisRequest  接口（获取标本信息） ok
 '''
 1 、GetLisRequest  接口（获取标本信息）
 LIS 将核收到的病人信息和医嘱信息，第三方外送检验机构通过“条码号”【参数：医院
 条码】从该接口获取 LIS 的病人信息和医嘱信息（XML 文档字符串)
 '''
-@app.route("/GetLisRequest")
+@app.route("/GetLisRequest") #ok
 def GetLisRequest():
     print('get a data from hospital  with api of GetLisRequest')
     #requests.get('192.168.1.202:8000')
@@ -133,7 +134,7 @@ def AffirmRequest():
     return patient_info.text,200#,ret_header
 
 
-#3 、AffirmRequestWithExtBarc
+#3 、AffirmRequestWithExtBarc ok 
 '''
 3 、AffirmRequestWithExtBarcode  接口（确认获取标
 本信息成功，回传 第三方外送检验机构 条码）
@@ -147,7 +148,7 @@ AffirmRequestWithExtBarcode 接口发送确认获取成功的信息，参数：�
 解码后：
 <response><resultcode>1</resultcode><errormsg></errormsg></response>
 '''
-@app.route("/AffirmRequestWithExtBarcode")
+@app.route("/AffirmRequestWithExtBarcode") #ok
 def AffirmRequestWithExtBarcode():
     print('get a data from hospital  with api of GetLisRequest')
     #requests.get('192.168.1.202:8000')
@@ -188,12 +189,53 @@ def UploadLisRepData():
     data1 = '''<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><UploadLisRepData xmlns="http://tempuri.org/"><reportResult><Report_Result>Report_Result_1111</Report_Result></reportResult></UploadLisRepData></soap12:Body></soap12:Envelope>'''
 
     data = '''<Report_Result><Report_Info><ext_lab_code></ext_lab_code><lis_Barcode>2442503307</lis_Barcode><ext_Barcode></ext_Barcode><ext_checkItem /><pat_name>李叶莲</pat_name><pat_age>52</pat_age><pat_height /><pat_wight /><pat_pre_week /><pat_id>2001696944</pat_id><pat_bedNo>None</pat_bedNo><pat_tel>13527706634</pat_tel><pat_sex>女</pat_sex><pat_birthday /><pat_ori_name>门诊</pat_ori_name><sam_name>默认</sam_name><sam_state /><doctor_name>王三锋</doctor_name><dept_name>妇科门诊(越秀)</dept_name><clinical_diag>[西]宫颈上皮内肿瘤，Ⅰ级</clinical_diag><SampleNumber>None</SampleNumber><blood_time>2022-03-11 01:24:09</blood_time><ext_check_ID /><ext_receive_time>2022-03-11 01:24:09</ext_receive_time><ext_upload_time /><ext_report_suggestion></ext_report_suggestion><ext_report_remark></ext_report_remark><ext_intstrmt_name /><ext_lab_name /><ext_report_type></ext_report_type><ext_check_time></ext_check_time><ext_first_audit_time></ext_first_audit_time><ext_second_audit_time></ext_second_audit_time><ext_checker></ext_checker><ext_first_audit></ext_first_audit><ext_second_audit></ext_second_audit><ext_report_code></ext_report_code><result_info><result_seq/><ext_combine_code /><ext_combine_name /><ext_item_code /><ext_item_name /><result><![CDATA[阴]]></result><result_unit></result_unit><result_flag></result_flag><result_reference></result_reference><result_date></result_date><result_intstrmt_name></result_intstrmt_name><result_test_method></result_test_method><result_suggestion></result_suggestion><result_remark></result_remark><lis_combine_code></lis_combine_code><lis_combine_name></lis_combine_name><lis_item_code></lis_item_code><lis_item_name></lis_item_name></result_info><report_pic><pic_name></pic_name><pic_seq></pic_seq></report_pic></Report_Info></Report_Result>'''
+    data = '''<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><UploadLisRepData xmlns="http://tempuri.org/"><reportResult><Report_Result><Report_Info><ext_lab_code></ext_lab_code><lis_Barcode>2442503307</lis_Barcode><ext_Barcode></ext_Barcode><ext_checkItem /><pat_name>李叶莲</pat_name><pat_age>52</pat_age><pat_height /><pat_wight /><pat_pre_week /><pat_id>2001696944</pat_id><pat_bedNo>None</pat_bedNo><pat_tel>13527706634</pat_tel><pat_sex>女</pat_sex><pat_birthday /><pat_ori_name>门诊</pat_ori_name><sam_name>默认</sam_name><sam_state /><doctor_name>王三锋</doctor_name><dept_name>妇科门诊(越秀)</dept_name><clinical_diag>[西]宫颈上皮内肿瘤，Ⅰ级</clinical_diag><SampleNumber>None</SampleNumber><blood_time>2022-03-11 01:24:09</blood_time><ext_check_ID /><ext_receive_time>2022-03-11 01:24:09</ext_receive_time><ext_upload_time /><ext_report_suggestion></ext_report_suggestion><ext_report_remark></ext_report_remark><ext_intstrmt_name /><ext_lab_name /><ext_report_type></ext_report_type><ext_check_time></ext_check_time><ext_first_audit_time></ext_first_audit_time><ext_second_audit_time></ext_second_audit_time><ext_checker></ext_checker><ext_first_audit></ext_first_audit><ext_second_audit></ext_second_audit><ext_report_code></ext_report_code><result_info><result_seq/><ext_combine_code /><ext_combine_name /><ext_item_code /><ext_item_name /><result><![CDATA[阴]]></result><result_unit></result_unit><result_flag></result_flag><result_reference></result_reference><result_date></result_date><result_intstrmt_name></result_intstrmt_name><result_test_method></result_test_method><result_suggestion></result_suggestion><result_remark></result_remark><lis_combine_code></lis_combine_code><lis_combine_name></lis_combine_name><lis_item_code></lis_item_code><lis_item_name></lis_item_name></result_info><report_pic><pic_name></pic_name><pic_seq></pic_seq></report_pic></Report_Info></Report_Result></reportResult></UploadLisRepData></soap12:Body></soap12:Envelope>'''
+
+    data = '''xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:tem="http://tempuri.org/"><soapenv:Header/><soapenv:Body><tem:UploadLisRepData><!--Optional:--><tem:reportResult><![CDATA[ <Report_Result><Report_Info><ext_lab_code></ext_lab_code><lis_Barcode>2442503307</lis_Barcode><ext_Barcode></ext_Barcode><ext_checkItem /><pat_name>李叶莲</pat_name><pat_age>52</pat_age><pat_height /><pat_wight /><pat_pre_week /><pat_id>2001696944</pat_id><pat_bedNo>None</pat_bedNo><pat_tel>13527706634</pat_tel><pat_sex>女</pat_sex><pat_birthday /><pat_ori_name>门诊</pat_ori_name><sam_name>默认</sam_name><sam_state /><doctor_name>王三锋</doctor_name><dept_name>妇科门诊(越秀)</dept_name><clinical_diag>[西]宫颈上皮内肿瘤，Ⅰ级</clinical_diag><SampleNumber>None</SampleNumber><blood_time>2022-03-11 01:24:09</blood_time><ext_check_ID /><ext_receive_time>2022-03-11 01:24:09</ext_receive_time><ext_upload_time /><ext_report_suggestion></ext_report_suggestion><ext_report_remark></ext_report_remark><ext_intstrmt_name /><ext_lab_name /><ext_report_type></ext_report_type><ext_check_time></ext_check_time><ext_first_audit_time></ext_first_audit_time><ext_second_audit_time></ext_second_audit_time><ext_checker></ext_checker><ext_first_audit></ext_first_audit><ext_second_audit></ext_second_audit><ext_report_code></ext_report_code><result_info><result_seq/><ext_combine_code /><ext_combine_name /><ext_item_code /><ext_item_name /><result><![CDATA[阴]]]]>><![CDATA[</result><result_unit></result_unit><result_flag></result_flag><result_reference></result_reference><result_date></result_date><result_intstrmt_name></result_intstrmt_name><result_test_method></result_test_method><result_suggestion></result_suggestion><result_remark></result_remark><lis_combine_code></lis_combine_code><lis_combine_name></lis_combine_name><lis_item_code></lis_item_code><lis_item_name></lis_item_name></result_info><report_pic><pic_name></pic_name><pic_seq></pic_seq></report_pic></Report_Info></Report_Result>]]></tem:reportResult></tem:UploadLisRepData></soapenv:Body></soapenv:Envelope>'''
+    # with open('1入参示例.xml',encoding="utf-8") as fh:
+    with open('入参2.txt',encoding="utf-8") as fh:
+        data = fh.read()
+    data1 = '''<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <UploadLisRepData xmlns="http://tempuri.org/">'''
+
+    data2 = '''</UploadLisRepData>
+  </soap:Body>
+</soap:Envelope>'''
+    
+    # data = data1 + raw_data + data2
     encode_data = data.encode('utf-8')
     # print(data)
     headers = {"Host": "10.10.11.196",
-            "Content-Type": "application/soap+xml; charset=UTF-8",
-            "Content-Length": str(len(encode_data)) ,}
-            #"SOAPAction": "http://tempuri.org/UploadLisRepData"}
+            "Content-Type": "text/xml; charset=utf-8",
+            # "Content-Type": "application/soap+xml; charset=UTF-8",  
+            "Content-Length": str(len(encode_data)) ,#}
+            "SOAPAction": "http://tempuri.org/UploadLisRepData"}
+    #patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data,headers=headers)
+    patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/ExtReportService', data=encode_data ,headers=headers)
+
+    print('patient_info.header----')
+    print(patient_info.headers)
+    print('patient_info.text----')    
+    print(patient_info.text)
+
+    return patient_info.text,200#,ret_header 
+
+
+@app.route("/UploadLisRepData2")
+def UploadLisRepData2():
+    print('get a data from hospital  with api of GetLisRequest')
+
+ 
+    data = '''xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:tem="http://tempuri.org/"><soapenv:Header/><soapenv:Body><tem:UploadLisRepData><!--Optional:--><tem:reportResult><![CDATA[ <Report_Result><Report_Info><ext_lab_code></ext_lab_code><lis_Barcode>2442503307</lis_Barcode><ext_Barcode></ext_Barcode><ext_checkItem /><pat_name>李叶莲</pat_name><pat_age>52</pat_age><pat_height /><pat_wight /><pat_pre_week /><pat_id>2001696944</pat_id><pat_bedNo>None</pat_bedNo><pat_tel>13527706634</pat_tel><pat_sex>女</pat_sex><pat_birthday /><pat_ori_name>门诊</pat_ori_name><sam_name>默认</sam_name><sam_state /><doctor_name>王三锋</doctor_name><dept_name>妇科门诊(越秀)</dept_name><clinical_diag>[西]宫颈上皮内肿瘤，Ⅰ级</clinical_diag><SampleNumber>None</SampleNumber><blood_time>2022-03-11 01:24:09</blood_time><ext_check_ID /><ext_receive_time>2022-03-11 01:24:09</ext_receive_time><ext_upload_time /><ext_report_suggestion></ext_report_suggestion><ext_report_remark></ext_report_remark><ext_intstrmt_name /><ext_lab_name /><ext_report_type></ext_report_type><ext_check_time></ext_check_time><ext_first_audit_time></ext_first_audit_time><ext_second_audit_time></ext_second_audit_time><ext_checker></ext_checker><ext_first_audit></ext_first_audit><ext_second_audit></ext_second_audit><ext_report_code></ext_report_code><result_info><result_seq/><ext_combine_code /><ext_combine_name /><ext_item_code /><ext_item_name /><result><![CDATA[阴]]]]>><![CDATA[</result><result_unit></result_unit><result_flag></result_flag><result_reference></result_reference><result_date></result_date><result_intstrmt_name></result_intstrmt_name><result_test_method></result_test_method><result_suggestion></result_suggestion><result_remark></result_remark><lis_combine_code></lis_combine_code><lis_combine_name></lis_combine_name><lis_item_code></lis_item_code><lis_item_name></lis_item_name></result_info><report_pic><pic_name></pic_name><pic_seq></pic_seq></report_pic></Report_Info></Report_Result>]]></tem:reportResult></tem:UploadLisRepData></soapenv:Body></soapenv:Envelope>'''
+    data = '''<soap:Envelopexmlns:soap="http://www.w3.org/2003/05/soap-envelope"xmlns:tem="http://tempuri.org/"><soap:Header/><soap:Body><tem:UploadLisRepData><!--Optional:--><tem:reportResult><![CDATA[<soap:Envelopexmlns:soap="http://www.w3.org/2003/05/soap-envelope"xmlns:tem="http://tempuri.org/"><soap:Header/><soap:Body><tem:UploadLisRepData><!--Optional:--><tem:reportResult><![CDATA[<Report_Result><Report_Info><ext_lab_code>42625453</ext_lab_code><lis_Barcode>42625453</lis_Barcode><ext_Barcode></ext_Barcode><ext_checkItem /><pat_name>测试0321</pat_name><pat_age>None</pat_age><pat_height /><pat_wight /><pat_pre_week /><pat_id>3013097142</pat_id><pat_bedNo>None</pat_bedNo><pat_tel>None</pat_tel><pat_sex>男</pat_sex><pat_birthday /><pat_ori_name>住院</pat_ori_name><sam_name>None</sam_name><sam_state /><doctor_name>曾志生</doctor_name><dept_name>测试</dept_name><clinical_diag>None</clinical_diag><SampleNumber>None</SampleNumber><blood_time>2022-03-21 09:00:25</blood_time><ext_check_ID /><ext_receive_time>2022-03-21 09:00:25</ext_receive_time><ext_upload_time /><ext_report_suggestion>受检者标本宫颈癌基因甲基化检测结果为阳性，请结合临床综合分析。</ext_report_suggestion><ext_report_remark></ext_report_remark><ext_intstrmt_name /><ext_lab_name /><ext_report_type>A4</ext_report_type><ext_check_time>2022-03-20 16:00:00</ext_check_time><ext_first_audit_time>2022-03-20 16:00:00</ext_first_audit_time><ext_second_audit_time>2022-03-20 16:00:00</ext_second_audit_time><ext_checker>张纪斌</ext_checker><ext_first_audit>毛荣丽</ext_first_audit><ext_second_audit>毛荣丽</ext_second_audit><ext_report_code>A4</ext_report_code><result_info><result_seq/><ext_combine_code /><ext_combine_name /><ext_item_code /><ext_item_name /><result><![CDATA[阳]]]]]]>><![CDATA[><![CDATA[</result><result_unit><![CDATA[Ct]]]]]]>><![CDATA[><![CDATA[</result_unit><result_flag></result_flag><result_reference></result_reference><result_date>2022-03-20 16:00:00</result_date><result_intstrmt_name>ABI 7500</result_intstrmt_name><result_test_method>qPCR</result_test_method><result_suggestion>受检者标本宫颈癌基因甲基化检测结果为阳性，请结合临床综合分析。</result_suggestion><result_remark></result_remark><lis_combine_code>32009</lis_combine_code><lis_combine_name>宫颈癌甲基化检测</lis_combine_name><lis_item_code>32344</lis_item_code><lis_item_name>外送项目</lis_item_name></result_info><report_pic><pic_content></pic_content><pic_name>宫颈癌基因甲基化检测报告-测试0321_Psl57i2.pdf</pic_name><pic_seq>1</pic_seq></report_pic></Report_Info></Report_Result> ]]]]>><![CDATA[</tem:reportResult></tem:UploadLisRepData></soap:Body></soap:Envelope>]]></tem:reportResult></tem:UploadLisRepData></soap:Body></soap:Envelope>'''
+    encode_data = data.encode('utf-8')
+    # print(data)
+    headers = {"Host": "10.10.11.196",
+            "Content-Type": "text/xml; charset=UTF-8",
+            "Content-Length": str(len(encode_data)) ,#}
+            "SOAPAction": "http://tempuri.org/UploadLisRepData"}
     #patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/test', data=encode_data,headers=headers)
     patient_info = requests.post(f'http://{Config.MIDDLE_HOST_ADDRESS}/ExtReportService', data=encode_data ,headers=headers)
 
@@ -203,6 +245,10 @@ def UploadLisRepData():
     print(patient_info.text)
 
     return patient_info.text,200#,ret_header
+    
+
+
+
 
 @app.route("/send2server",methods=['POST'])
 def send2server():

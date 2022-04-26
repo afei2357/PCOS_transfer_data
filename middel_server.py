@@ -32,6 +32,23 @@ def ExtReportService():
     return request_patient_info.text
 
 
+@app.route("/ExtReportService2",methods=['POST'])
+def ExtReportService2():
+    ip = request.remote_addr
+    #logger.info(ip)
+#    if ip == f'{Config.REMOTE_SERVER_ADDRESS}'.split(':')[0]:
+    logger.info('get a connection ip is :'+ip)
+    print('get a connection ip is :'+ip)
+    #logger.info(request.environ.get('HTTP_X_REAL_IP', request.remote_addr) )
+#    print(request.data)
+    #response.encoding = 'gb2312'
+    request_patient_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/ExtReportService.asmx',data=request.data,headers=request.headers)
+    print(request.headers)
+    request_patient_info.encoding = 'utf-8'
+    logger.info(request_patient_info.text)
+    print(request_patient_info.text)
+    logger.info(request_patient_info.headers)
+    return request_patient_info.text
 
 
 # 1 、GetLisRequest  接口（获取标本信息）

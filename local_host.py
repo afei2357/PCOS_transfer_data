@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 app = Flask(__name__)
 from config import Config
 
-# 1 、GetLisRequest  接口（获取标本信息）
+# 1 、GetLisRequest  接口（获取标本信息） ok
 '''
 1 、GetLisRequest  接口（获取标本信息）
 LIS 将核收到的病人信息和医嘱信息，第三方外送检验机构通过“条码号”【参数：医院
