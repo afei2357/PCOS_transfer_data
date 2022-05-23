@@ -1,0 +1,37 @@
+    data1 = '''
+<soap:Envelope
+    xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+    xmlns:tem="http://tempuri.org/">
+    <soap:Header/>
+    <soap:Body>
+        <tem:UploadLisRepData>
+            <!--Optional:-->
+            <tem:reportResult>
+                <![CDATA[<Report_Result><Report_Info><ext_lab_code></ext_lab_code><lis_Barcode>42936757</lis_Barcode><ext_Barcode>100311224212</ext_Barcode><ext_checkItem/><pat_name>测试0426</pat_name><pat_age/><pat_height/><pat_wight/><pat_pre_week/><pat_id>3722021823</pat_id><pat_bedNo/><pat_tel>10086</pat_tel><pat_sex/><pat_birthday/><pat_ori_name/><sam_name>血清</sam_name><sam_state/><doctor_name>郭佩湘</doctor_name><dept_name>1</dept_name><clinical_diag/><SampleNumber/><blood_time/><ext_check_ID/><ext_receive_time>2021-11-19 16:20:00</ext_receive_time><ext_upload_time/><ext_report_suggestion/><ext_report_remark/><ext_intstrmt_name/><ext_lab_name/><ext_report_type/><ext_check_time>2021-11-19 16:35:00</ext_check_time><ext_first_audit_time>2021-11-19 16:35:59</ext_first_audit_time><ext_second_audit_time>2021-11-19 16:35:59</ext_second_audit_time><ext_checker>黄孟孟</ext_checker><ext_first_audit>周紫燕</ext_first_audit><ext_second_audit>周紫燕</ext_second_audit><ext_report_code>1636961339000</ext_report_code><result_info><result_seq/><ext_combine_code>742</ext_combine_code><ext_combine_name>742</ext_combine_name><ext_item_code>742-9570</ext_item_code><ext_item_name>外院测试项目</ext_item_name><result>
+                <![CDATA[6.4]]]]>>
+                <![CDATA[</result><result_unit>
+                <![CDATA[%]]]]>>
+                <![CDATA[</result_unit><result_flag>
+                <![CDATA[↓]]]]>>
+                <![CDATA[</result_flag><result_reference>
+                <![CDATA[7.4-12.6]]]]>>
+                <![CDATA[</result_reference><result_date>2021-11-19 16:22:59</result_date><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>31798</lis_combine_code><lis_combine_name>院内测试组合</lis_combine_name><lis_item_code>32009</lis_item_code><lis_item_name>宫颈癌甲基化检测</lis_item_name></result_info><result_info><result_seq/><ext_combine_code>742</ext_combine_code><ext_combine_name>742</ext_combine_name><ext_item_code>742-9506</ext_item_code><ext_item_name>外院测试项目</ext_item_name><result>
+                <![CDATA[35.6]]]]>>
+                <![CDATA[</result><result_unit>
+                <![CDATA[%]]]]>>
+                <![CDATA[</result_unit><result_flag>
+                <![CDATA[↑]]]]>>
+                <![CDATA[</result_flag><result_reference>
+                <![CDATA[8.0-15.8]]]]>>
+                <![CDATA[</result_reference><result_date>2021-11-19 16:22:59</result_date><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>10983</lis_combine_code><lis_combine_name>院内测试组合</lis_combine_name><lis_item_code>32284</lis_item_code><lis_item_name>院内测试项目</lis_item_name></result_info><report_pic><pic_content>'''
+                
+    data3 = '''</pic_content><pic_name>test_base64.pdf</pic_name><pic_seq></pic_seq></report_pic></Report_Info></Report_Result>]]>
+            </tem:reportResult>
+        </tem:UploadLisRepData>
+    </soap:Body>
+</soap:Envelope>
+    ''
+    data2 = ''
+    with open('test_base64.pdf','rb') as fh:
+            data2 = base64.b64encode(fh.read())
+    data = data1.encode('utf-8') + data2 + data3.encode('utf-8')

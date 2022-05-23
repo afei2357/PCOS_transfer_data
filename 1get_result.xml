@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Data>
+    <Data_Row>
+        <lis_Barcode>42936757</lis_Barcode>
+        <sample_no>1</sample_no>
+        <pat_no>3722021823</pat_no>
+        <pat_id>3722021823</pat_id>
+        <pat_name>测试0426</pat_name>
+        <pat_bedNo></pat_bedNo>
+        <spouse_info></spouse_info>
+        <blood_time>2022-04-26 15:34:42</blood_time>
+        <pat_sex>1</pat_sex>
+        <pat_birthday></pat_birthday>
+        <pat_age/>
+        <pat_ageunit/>
+        <pat_tel></pat_tel>
+        <dept_name>测试</dept_name>
+        <doctor_name></doctor_name>
+        <doctor_tel></doctor_tel>
+        <clinical_diag></clinical_diag>
+        <samp_name></samp_name>
+        <pat_Remark></pat_Remark>
+        <Pat_From>门诊</Pat_From>
+        <Pat_ID>10469202204261</Pat_ID>
+        <pat_CardNo></pat_CardNo>
+        <LisItems>
+            <lis_item_code>32009</lis_item_code>
+            <lis_item_name>宫颈癌甲基化检测</lis_item_name>
+            <SubItems>
+                <lis_subitem_code>32344</lis_subitem_code>
+                <lis_subitem_name>外送项目</lis_subitem_name>
+            </SubItems>
+        </LisItems>
+    </Data_Row>
+</Data>

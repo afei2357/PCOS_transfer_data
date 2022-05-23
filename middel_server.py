@@ -65,7 +65,17 @@ def GetLisRequest():
     logger.info('get a connection ip is :'+ip)
     #logger.info(request.environ.get('HTTP_X_REAL_IP', request.remote_addr) )
 #    print(request.data)
-    request_patient_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/GetLisRequest',data=request.data,headers=request.headers)
+    data = '''<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetLisRequest xmlns="http://tempuri.org/">
+      <hospSampleID>42936765</hospSampleID>
+    </GetLisRequest>
+  </soap:Body>
+</soap:Envelope>'''
+    # request_patient_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/GetLisRequest',data=request.data,headers=request.headers)
+    request_patient_info = requests.post(f'http://{Config.LOCAL_HOST_ADDRESS}/GetLisRequest',data=data,headers=request.headers)
+
 #request_patient_info = requests.post(f'http://{ip}/GetLisRequest',data=request.data,headers=request.headers)
     print(request_patient_info.text)
     print(request_patient_info.headers)
