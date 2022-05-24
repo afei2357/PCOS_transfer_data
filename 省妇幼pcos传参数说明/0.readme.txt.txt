@@ -1,0 +1,4 @@
+由于医药内网不直接联通外网，所以在医院内网编写了一个联通外网的中转脚本，直接将外网的信息发送到内网中。
+从外网发送数据到http://58.62.17.237:4431/ExtReportService 中，内网相关服务根据xml的内容进行解析，转发到不同的接口。
+主要有四个接口，分别是 1、GetLisRequest 接口 、2、AffirmRequest 接口，3、AffirmRequestWithExtBarcode 接口，4、UploadLisRepData 接口。
+xml示例已经写成四份txt里，仅供参考。

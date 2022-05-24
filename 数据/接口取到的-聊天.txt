@@ -1,0 +1,16 @@
+接口取到的
+lis_item_code ,
+lis_item_name 对应的是组合编码与名称也就是回传接口的
+lis_combine_code ，
+lis_combine_name ，而
+lis_subitem_code ，
+lis_subitem_name 对应的是项目编码与名称，也就是回传接口的
+lis_item_code ，
+lis_item_name
+
+
+GetLisRequest接口取到的lis_item_code = UploadLisRepData的lis_combine_code
+GetLisRequest接口取到的lis_item_name = UploadLisRepData的lis_combine_name
+
+GetLisRequest接口取到的lis_subitem_code = UploadLisRepData的lis_item_code
+GetLisRequest接口取到的lis_subitem_name = UploadLisRepData的lis_item_name

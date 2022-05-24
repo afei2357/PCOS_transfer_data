@@ -1,0 +1,75 @@
+def set_result_info(*param):
+    result_info = f'''<result_info><result_seq/><ext_combine_code>{ext_combine_code}</ext_combine_code><ext_combine_name>{ext_combine_name}</ext_combine_name><ext_item_code>{ext_item_code}</ext_item_code><ext_item_name>{ext_item_name}</ext_item_name><result>
+                <![CDATA[{result}]]]]>>
+                <![CDATA[</result><result_unit>
+                <![CDATA[{result_unit}]]]]>>
+                <![CDATA[</result_unit><result_flag/><result_reference>
+                <![CDATA[{result_reference}]]]]>>
+                <![CDATA[</result_reference><result_date/><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>{lis_combine_code}</lis_combine_code><lis_combine_name>{lis_combine_name}</lis_combine_name><lis_item_code>{lis_item_code}</lis_item_code><lis_item_name>{lis_item_name}</lis_item_name></result_info>'''
+    return result_info
+
+
+ext_combine_code 组合项目               
+ext_combine_name 项目名称
+ext_item_code 结果项目代码
+ext_item_name 结果项目名称
+result 结果 ok
+result_unit 单位 ok
+result_reference  参考值 ok
+lis_combine_code 医院组合项目代码
+lis_combine_name 医院组合项目名称
+lis_item_code 医院结果项目代码
+lis_item_name 医院结果项目名称
+
+原始的已经成功的：
+<result_info><result_seq/><ext_combine_code>742</ext_combine_code><ext_combine_name>742</ext_combine_name><ext_item_code>742-9570</ext_item_code><ext_item_name>外院测试项目</ext_item_name><result>
+                <![CDATA[6.4]]]]>>
+                <![CDATA[</result><result_unit>
+                <![CDATA[%]]]]>>
+                <![CDATA[</result_unit><result_flag>
+                <![CDATA[↓]]]]>>
+                <![CDATA[</result_flag><result_reference>
+                <![CDATA[7.4-12.6]]]]>>
+                <![CDATA[</result_reference><result_date>2021-11-19 16:22:59</result_date><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>31798</lis_combine_code><lis_combine_name>院内测试组合</lis_combine_name><lis_item_code>32009</lis_item_code><lis_item_name>宫颈癌甲基化检测</lis_item_name></result_info><result_info><result_seq/><ext_combine_code>742</ext_combine_code><ext_combine_name>742</ext_combine_name><ext_item_code>742-9506</ext_item_code><ext_item_name>外院测试项目</ext_item_name><result>
+                <![CDATA[35.6]]]]>>
+                <![CDATA[</result><result_unit>
+                <![CDATA[%]]]]>>
+                <![CDATA[</result_unit><result_flag>
+                <![CDATA[↑]]]]>>
+                <![CDATA[</result_flag><result_reference>
+                <![CDATA[8.0-15.8]]]]>>
+                <![CDATA[</result_reference><result_date>2021-11-19 16:22:59</result_date><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>10983</lis_combine_code><lis_combine_name>院内测试组合</lis_combine_name><lis_item_code>32284</lis_item_code><lis_item_name>院内测试项目</lis_item_name></result_info>
+
+代码生成的，出错了------- 将截断字符串或二进制数据。语句已终止。：
+ <result_info><result_seq/><ext_combine_code>742</ext_combine_code><ext_combine_name>742</ext_combine_name><ext_item_code>742-9506</ext_item_code><ext_item_name>外院测试项目</ext_item_name><result>
+                <![CDATA[0.478]]]]>>
+                <![CDATA[</result><result_unit>
+                <![CDATA[ng/mL]]]]>>
+                <![CDATA[</result_unit><result_flag/><result_reference>
+                <![CDATA[0.02 - 0.45]]]]>>
+                <![CDATA[</result_reference><result_date/><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>10983</lis_combine_code><lis_combine_name>院内测试组合</lis_combine_name><lis_item_code>32025</lis_item_code><lis_item_name>雄激素5项(爱湾)</lis_item_name></result_info><result_info><result_seq/><ext_combine_code>742</ext_combine_code><ext_combine_name>742</ext_combine_name><ext_item_code>742-9506</ext_item_code><ext_item_name>外院测试项目</ext_item_name><result>
+                <![CDATA[2.958]]]]>>
+                <![CDATA[</result><result_unit>
+                <![CDATA[ng/mL]]]]>>
+                <![CDATA[</result_unit><result_flag/><result_reference>
+                <![CDATA[育龄女性：
+卵泡期 0.35 - 2.51；排卵期 0.30 - 2.35；
+黄体期 0.30 - 2.35]]]]>>
+                <![CDATA[</result_reference><result_date/><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>10983</lis_combine_code><lis_combine_name>院内测试组合</lis_combine_name><lis_item_code>32025</lis_item_code><lis_item_name>雄激素5项(爱湾)</lis_item_name></result_info><report_pic><pic_content>               
+
+代码生成，成功的
+'<result_info><result_seq/><ext_combine_code>742</ext_combine_code><ext_combine_name>742</ext_combine_name><ext_item_code>742-9506</ext_item_code><ext_item_name>外院测试项目</ext_item_name><result>\n                <![CDATA[0.478]]]]>>\n                <![CDATA[</result><result_unit>\n                <![CDATA[ng/mL]]]]>>\n                <![CDATA[</result_unit><result_flag/><result_reference>\n                <![CDATA[0.02 - 0.45]]]]>>\n                <![CDATA[</result_reference><result_date/><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>10983</lis_combine_code><lis_combine_name>院内测试组合</lis_combine_name><lis_item_code>32025</lis_item_code><lis_item_name>雄激素5项(爱湾)</lis_item_name></result_info><report_pic><pic_content>'
+
+再次失败，reference已经去掉\n 了
+'<result_info><result_seq/><ext_combine_code>742</ext_combine_code><ext_combine_name>742</ext_combine_name><ext_item_code>742-9506</ext_item_code><ext_item_name>外院测试项目</ext_item_name><result>\n                <![CDATA[2.958]]]]>>\n                <![CDATA[</result><result_unit>\n                <![CDATA[ng/mL]]]]>>\n                <![CDATA[</result_unit><result_flag/><result_reference>\n                <![CDATA[育龄女性：-卵泡期 0.35 - 2.51-排卵期 0.30 - 2.35--黄体期 0.30 - 2.35]]]]>>\n                <![CDATA[</result_reference><result_date/><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>10983</lis_combine_code><lis_combine_name>院内测试组合</lis_combine_name><lis_item_code>32025</lis_item_code><lis_item_name>雄激素5项(爱湾)</lis_item_name></result_info><report_pic><pic_content>'
+
+
+<![CDATA[0.02 - 0.45]]]]>>
+ <![CDATA[育龄女性--卵泡期 0.35 - 2.51-排卵期 0.30 - 2.35--黄体期 0.30 - 2.35]]]]>>\n
+
+
+ <result_reference>\n                <![CDATA[育龄女性：-卵泡期 0.35 - 2.51-排卵期 0.30 - 2.35--黄体期 0.30 - 2.35]]]]>>\n                <![CDATA[</result_reference>
+
+
+ 
+ <result_reference>\n                <![CDATA[-]]]]>>\n                <![CDATA[</result_reference>

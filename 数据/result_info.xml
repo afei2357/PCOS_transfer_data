@@ -1,0 +1,19 @@
+<result_info><result_seq/><ext_combine_code>{ext_combine_code}</ext_combine_code><ext_combine_name>{ext_combine_name}</ext_combine_name><ext_item_code>{ext_item_code}</ext_item_code><ext_item_name>{ext_item_name}</ext_item_name><result>
+                <![CDATA[{result}]]]]>>
+                <![CDATA[</result><result_unit>
+                <![CDATA[{result_unit}]]]]>>
+                <![CDATA[</result_unit><result_flag/><result_reference>
+                <![CDATA[{result_reference}]]]]>>
+                <![CDATA[</result_reference><result_date/><result_intstrmt_name/><result_test_method/><result_suggestion/><result_remark/><lis_combine_code>{lis_combine_code}</lis_combine_code><lis_combine_name>{lis_combine_name}</lis_combine_name><lis_item_code>{lis_item_code}</lis_item_code><lis_item_name>{lis_item_name}</lis_item_name></result_info>
+
+   ext_combine_code 组合项目               
+   ext_combine_name 项目名称
+   ext_item_code 结果项目代码
+   ext_item_name 结果项目名称
+   result 结果
+   result_unit 单位
+   result_reference  参考值
+   lis_combine_code 医院组合项目代码
+   lis_combine_name 医院组合项目名称
+   lis_item_code 医院结果项目代码
+   lis_item_name 医院结果项目名称

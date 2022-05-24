@@ -1,0 +1,15 @@
+# 2 、AffirmRequest  接口（确认获取标本信息成功）
+第三方外送检验机构通过 GetLisRequest 接口成功获取病人信息和医嘱信息后，通过
+AffirmRequest 接口发送确认获取成功的信息，参数：医院条码
+调用方式：AffirmRequest(HospSampleID)
+
+
+发送数据的地址：http://58.62.17.237:4431/ExtReportService
+
+headers = {"Host": "10.10.11.196",
+            "Content-Type": "application/soap+xml; charset=UTF-8",
+            "Content-Length": str(len(encode_data)),
+            "SOAPAction": "http://tempuri.org/AffirmRequest"}
+
+ 发送的xml数据格式：            
+<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><AffirmRequest xmlns="http://tempuri.org/"><hospSampleID>42936757</hospSampleID></AffirmRequest></soap12:Body></soap12:Envelope>

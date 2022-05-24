@@ -25,7 +25,7 @@ def ExtReportService():
     print('get a data from hospital  with api of GetLisRequest')
     #requests.get('192.168.1.202:8000')
     # data = '''<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisItems xmlns="http://tempuri.org/" /></soap12:Body>/soap12:Envelope>'''
-    data = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisRequest xmlns="http://tempuri.org/"><hospSampleID>3142647053</hospSampleID></GetLisRequest></soap12:Body></soap12:Envelope>'
+    data = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisRequest xmlns="http://tempuri.org/"><hospSampleID>2343127051</hospSampleID></GetLisRequest></soap12:Body></soap12:Envelope>'
     encode_data = data.encode('utf-8')
     # print(data)
     headers = {"Host": "10.10.11.196",
@@ -84,7 +84,7 @@ def GetLisRequest():
     # data = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisRequest xmlns="http://tempuri.org/"><hospSampleID>3542646409</hospSampleID></GetLisRequest></soap12:Body></soap12:Envelope>'
 
     # data = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisRequest xmlns="http://tempuri.org/"><hospSampleID>42936757</hospSampleID></GetLisRequest></soap12:Body></soap12:Envelope>'
-    data = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisRequest xmlns="http://tempuri.org/"><hospSampleID>2343127051</hospSampleID></GetLisRequest></soap12:Body></soap12:Envelope>'
+    data = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetLisRequest xmlns="http://tempuri.org/"><hospSampleID>42936757</hospSampleID></GetLisRequest></soap12:Body></soap12:Envelope>'
     encode_data = data.encode('utf-8')
     # print(data)
     headers = {"Host": "10.10.11.196",

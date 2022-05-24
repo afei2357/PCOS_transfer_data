@@ -33,3 +33,40 @@
         </LisItems>
     </Data_Row>
 </Data>
+
+
+
+项目名称：PCOS激素多项     英文代码     PCOSAONEMED  
+PCOS质朴项目  43
+这个上面看起来不是有这个LIST_ITEM_CODE?
+32025 雄激素5项（爱湾） 
+
+
+<ext_Barcode>第三方外送检验机构条码</ext_Barcode>，<ext_report_code>报告单号</ext_report_code>
+
+<lis_Barcode>医院条码</lis_Barcode>
+<ext_Barcode>第三方外送检验机构条码</ext_Barcode>
+
+<ext_report_code>报告单号</ext_report_code>  
+<lis_combine_code>医院组合项目代码</lis_combine_code>
+<lis_combine_name>医院组合项目名称</lis_combine_name>
+<ext_combine_code>组合项目</ext_combine_code>
+<ext_combine_name>项目名称</ext_combine_name>
+<ext_item_code>结果项目代码</ext_item_code>
+<ext_item_name>结果项目名称</ext_item_name>
+
+ext_Barcode = 'aiWanYiXue'  #第三方外送检验机构条码
+ext_report_code = 'aiWan_report1'
+ext_combine_name = 'PCOS激素多项' # 项目名称
+ext_combine_code = 'PCOSAONEMED' # 组合项目
+
+
+ext_item_code = 'T'     # 结果项目代码
+ext_item_name = '睾酮（T）' #结果项目名称
+
+
+lis_item_code = '32025'            #  医院结果项目代码
+lis_item_name = '雄激素5项(爱湾)'   #  医院结果项目名称
+
+lis_combine_code = '32025'            # 医院组合项目代码
+lis_combine_name = '雄激素5项(爱湾)'   #医院组合项目名称
