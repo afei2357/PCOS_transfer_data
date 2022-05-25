@@ -9,8 +9,16 @@ lis_item_code ，
 lis_item_name
 
 
-GetLisRequest接口取到的lis_item_code = UploadLisRepData的lis_combine_code
-GetLisRequest接口取到的lis_item_name = UploadLisRepData的lis_combine_name
+GetLisRequest接口取到的lis_item_code = UploadLisRepData的 lis_combine_code
+GetLisRequest接口取到的lis_item_name = UploadLisRepData的 lis_combine_name
 
-GetLisRequest接口取到的lis_subitem_code = UploadLisRepData的lis_item_code
-GetLisRequest接口取到的lis_subitem_name = UploadLisRepData的lis_item_name
+GetLisRequest接口取到的lis_subitem_code = UploadLisRepData的 lis_item_code
+GetLisRequest接口取到的lis_subitem_name = UploadLisRepData的 lis_item_name
+
+
+ext_combine_name = 'PCOS激素多项' # 项目名称
+ext_combine_code = 'PCOSAONEMED' # 组合项目 这两个可以不用
+
+时间，条码，检验项目代码，检验组合代码，结果 是必填项
+
+检验项目代码，检验组合代码分别是 lis_item_code 和lis_combine_code吧

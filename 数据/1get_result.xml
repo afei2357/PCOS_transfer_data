@@ -1,3 +1,4 @@
+43201252
 <?xml version="1.0" encoding="utf-8"?>
 <Data>
     <Data_Row>
@@ -34,6 +35,12 @@
     </Data_Row>
 </Data>
 
+聊天结果：
+GetLisRequest 接口取到的 lis_item_code = UploadLisRepData的 lis_combine_code
+GetLisRequest接口取到的 lis_item_name = UploadLisRepData的 lis_combine_name
+
+GetLisRequest接口取到的 lis_subitem_code = UploadLisRepData的 lis_item_code
+GetLisRequest接口取到的 lis_subitem_name = UploadLisRepData的 lis_item_name
 
 
 项目名称：PCOS激素多项     英文代码     PCOSAONEMED  
@@ -70,3 +77,4 @@ lis_item_name = '雄激素5项(爱湾)'   #  医院结果项目名称
 
 lis_combine_code = '32025'            # 医院组合项目代码
 lis_combine_name = '雄激素5项(爱湾)'   #医院组合项目名称
+
