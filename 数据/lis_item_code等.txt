@@ -1,0 +1,46 @@
+5项的： lis_combine_code = '32025'
+'all_lis_item_code': ['32378', '32379', '32380', '32383', '32381']
+'all_lis_item_name': ['睾酮', '雄烯二酮', '硫酸脱氢表雄酮', '双氢睾酮', '脱氢表雄酮']			
+
+
+'all_lis_item_name': ['睾酮', '雄烯二酮', '硫酸脱氢表雄酮', '脱氢表雄酮', '双氢睾酮']
+
+17α羟孕酮 
+lis_combine_code = '32024'
+lis_item_code = '32382'
+
+<lis_item_code>32025</lis_item_code>
+<lis_item_name>雄激素5项(爱湾)</lis_item_name>
+<SubItems>
+    <lis_subitem_code>32378</lis_subitem_code>
+    <lis_subitem_name>睾酮</lis_subitem_name>
+</SubItems>
+<SubItems>
+    <lis_subitem_code>32379</lis_subitem_code>
+    <lis_subitem_name>雄烯二酮</lis_subitem_name>
+</SubItems>
+<SubItems>
+    <lis_subitem_code>32380</lis_subitem_code>
+    <lis_subitem_name>硫酸脱氢表雄酮</lis_subitem_name>
+</SubItems>
+<SubItems>
+    <lis_subitem_code>32381</lis_subitem_code>
+    <lis_subitem_name>脱氢表雄酮</lis_subitem_name>
+</SubItems>
+<SubItems>
+    <lis_subitem_code>32383</lis_subitem_code>
+    <lis_subitem_name>双氢睾酮</lis_subitem_name>
+------------
+
+<lis_item_code>32024</lis_item_code>
+<lis_item_name>17α羟孕酮(爱湾)</lis_item_name>
+<SubItems>
+    <lis_subitem_code>32382</lis_subitem_code>
+    <lis_subitem_name>17α-羟孕酮</lis_subitem_name>
+
+    聊天结果：
+GetLisRequest 接口取到的 lis_item_code = UploadLisRepData的 lis_combine_code
+GetLisRequest接口取到的 lis_item_name = UploadLisRepData的 lis_combine_name
+
+GetLisRequest接口取到的 lis_subitem_code = UploadLisRepData的 lis_item_code
+GetLisRequest接口取到的 lis_subitem_name = UploadLisRepData的 lis_item_name
