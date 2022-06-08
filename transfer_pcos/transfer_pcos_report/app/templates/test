@@ -1,0 +1,32 @@
+
+    <script type="text/javascript">
+    $("#upFileBtn").click(function(){
+            var chip_type =$("#chip_type").val() 
+            var is_impute =$("#is_impute").val() 
+            var is_update_product =$("#is_update_product").val()             
+            var email =$("#email").val()
+            var formData = new FormData($(#"uploadForm"));
+
+            formData.append("file",document.geteElementById("file").files[0]);
+            formData.append("genotype",document.geteElementById("genotype").files[0]);
+            formData.append("chip_type",chip_type);
+            formData.append("is_impute",is_impute);
+            formData.append("is_update_product",is_update_product);
+            formData.append("email",email);
+            $.ajax({
+                url:"{{ next_view }}",
+                data: formData,
+                type:"POST",
+                contentType:false,
+                processData:false,
+                success: function(info){
+                    if(info == "success"){
+                        alert("上传成功！！！！！")
+                    }else{
+                        alert("失败了-------")
+                    }
+                }
+                
+                })
+            })       
+    </script>

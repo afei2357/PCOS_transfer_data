@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<h2>{{ contents }}<h2/>
+<hr>
+<form name="form1" action="{{ next_view }}"  method="post" enctype ="multipart/form-data">
+
+<br/>
+    上传基因型及样品信息的Excel文件：<br/><br/>
+    <input type="file" id="file" name="file" /> <br />
+    上传基因型文件,即genotype.txt文件：<br/><br/>
+    <input type="file" id="genotype" name="genotype" /> <br />
+<br/>
+<br/>
+<input type="submit" value="提交生成报告">
+<br/><br/>
+<hr>
+<a href="{{url_for('PharChildView.PharChild_help')}}">帮助文档</a>
+    <br/>
+    <br/>
+    <br/>
+
+<input type="button" name="Submit" value="返回上一页" onclick="javascript:history.back(1)" />
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+[DEFAULT]
+test=test1
+
+[product]
+REOD07高血压药物26种=REOD07_hypertension_drug_24 
+REOD05 心血管药物综合基因检测=REOD05_hear_blood_drug_synthetical_gene_test 
+REOD08儿童药物基因检测=REOD08_child_drug_gene_test
+RHM008 儿童常见病风险=RHM008_child_common_disease_risk 
+RHM006 营养健康基因检测=RHM006_Nutrition_health_gene_test
+RK-08儿童多元智能=ChildPotentialTalent
+RHM004 常见心血管疾病易感风险=RHM004_common_heart_blood_disease_Susceptible_risk
+RHM002 个人基因组基础版=RHM002_personal_genome_basic
+个人基因组基础版@男性版=RHM002_personal_genome_basic_male 
+个人基因组基础版@女性版=RHM002_personal_genome_basic_female 
+优馨益-儿童安全用药基因检测=youXinYi_Child_safe_drug_gene_test 

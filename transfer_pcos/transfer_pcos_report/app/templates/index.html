@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block head %}
+    <meta charset="UTF-8">
+    <title>Index</title>
+{% endblock %}
+{% block body %}
+    <h1>{{ contents }}</h1>
+    {% for view ,name in view_dict.items()%}
+     <a href="{{ url_for(view) }}">{{ name }}</a> <br/>
+    {% endfor %}
+     <br/>
+    <hr>
+     <br/>
+    注："儿童 RK-10 儿童精准用药检测套餐"项目生成每份报告约耗时3分钟左右;其他项目每份报告耗时约5秒至30秒左右
+     <br/>
+     在首次运行某个项目时，请先看看项目页面的帮助文档
+     <br/>
+     <br/>
+     --版本v2.00
+
+
+{% endblock %}
+</html>    

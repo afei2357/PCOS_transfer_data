@@ -3,6 +3,8 @@ __pycache__/
 venv/
 .env
 logs/
+venv_pcos/
+tmp/
 tests/
 dump.rdb
 project_data
@@ -19,3 +21,5 @@ omics-h5
 .ipynb_checkpoints/
 *.swp
 test.xml
+workdir/
+work_dir

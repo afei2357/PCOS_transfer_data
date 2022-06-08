@@ -1,0 +1,5 @@
+.idea/
+venv_pcos/
+__pycache__/
+logs/
+tmp/

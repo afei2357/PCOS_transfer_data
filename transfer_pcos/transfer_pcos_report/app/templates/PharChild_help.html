@@ -1,0 +1,47 @@
+<html>
+<h1>请按照如下方式上传Excel</h1>
+<br/>
+
+ <a href="{{ url_for('indexView.index') }}">返回主页</a> 
+<br/>
+大部分项目的使用方法均类似，以下以“RK-10 儿童精准用药检测套餐” 作为代表演示如何使用本线上系统:
+<br/>
+<br/>
+<hr/>
+<br/>
+1、打开Excel下单表中的“客户信息”页，选择“数据” --> “筛选” ，然后选中Excel表里的“项目”，筛选出“RK-10 儿童精准用药检测套餐” 的行，复制包括标题行在内的所有内容，
+<br/>
+<br/>
+<img src="{{url_for('static', filename='img/PharChild_pic/0-0.png')}}" height="500" width="1200"  />
+<br/>
+<br/>
+2、新建一个Excel表,假设新表命名为“PharChild.xlsx”，将“PharChild.xlsx”下面的“sheet1”标签改成“info”，并将第一步复制的内容从第一行开始粘贴
+<br/>
+<br/>
+<img src="{{url_for('static', filename='img/PharChild_pic/0-1.png')}}" height="500" width="1200"  />
+<br/>
+<br/>
+3、同上，将下单表中的“实验结果”，复制相关行，注意不要把上面的东西多复制了，否则会出错
+<br/>
+<br/>
+<img src="{{url_for('static', filename='img/PharChild_pic/1-0.png')}}" height="500" width="1200"  />
+<br/>
+<br/>
+4、在2新建的Excel表“PharChild.xlsx”，打开“sheet2”标签，将其改名为“snp”，然后将3复制的内容从第一行开始粘贴，
+<br/>
+<br/>
+<img src="{{url_for('static', filename='img/PharChild_pic/1-1.png')}}" height="500" width="1200"  />
+<br/>
+<br/>
+5、上传这份新建的Excel表
+<br/>
+<img src="{{url_for('static', filename='img/PharChild_pic/2-0.png')}}" height="300" width="1200"  />
+<br/>
+6、稍等几秒到一分钟，下载结果文件
+<br/>
+<br/>
+ <a href="{{ url_for('indexView.index') }}">返回主页</a> 
+<br/>
+<br/>
+<br/>
+</html>

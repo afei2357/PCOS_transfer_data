@@ -1,0 +1,11 @@
+
+<html>
+<h1>图片</h1>
+<br/>
+
+ <a href="{{ url_for('indexView.index') }}">返回主页</a> 
+<br/>
+{% for file in files %}
+ <img src="{{ file }}"height="300" width="320"/>
+{% endfor %}
+</html>
