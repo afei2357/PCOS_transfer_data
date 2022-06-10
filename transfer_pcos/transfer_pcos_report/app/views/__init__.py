@@ -1,5 +1,6 @@
 from flask import Blueprint
-pcosView = Blueprint('pcosView',__name__)
 
+pcosView = Blueprint('pcosView', __name__)
 
-from app.views import  pcos 
+# 写在最后是为了防止循环导入，ping.py文件也会导入 bp
+from app.views import  pcos,tokens

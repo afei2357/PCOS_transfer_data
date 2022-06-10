@@ -33,7 +33,9 @@ class Reports(PaginatedAPIMixin,db.Model):
     lis_Barcode = db.Column(db.String(64))
     info = db.Column(db.String(500))
     create_time = db.Column(db.DateTime)
+    clazz = db.Column(db.String(20)) # 类别
     update_time  = db.Column(db.DateTime)
+    delete_at = db.Column(db.DateTime)
 
     def from_dict(self, data):
         columns = self.__table__.columns.keys()

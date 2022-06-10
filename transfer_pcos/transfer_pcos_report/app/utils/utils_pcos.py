@@ -2,7 +2,7 @@ from openpyxl import load_workbook
 from html.parser import HTMLParser
 import requests,base64,os,zipfile
 from xml.etree import ElementTree  as ET
-from app.models.product import Reports 
+from app.models.models_pcos import Reports 
 from app import db
 from datetime import datetime
 # 运行之前记得关闭DevSidecar或者别的代理工具
@@ -75,9 +75,6 @@ def get_LisRequest_data(patient_info):
 # 如果是5，那就是 “雄激素5项(爱湾)”，如果是17，那就代表“17α-羟孕酮”
 # def get_excel_info(infile,hospSampleID,flag = '5'):
 def get_excel_info(infile,flag = '5'):
-    # all_lis_item_code =  ['32378', '32379', '32380', '32381', '32383']
-    # patient_info = get_patient_info(hospSampleID)
-    # dct = get_LisRequest_data(patient_info)
     dct = {}
     ex  = load_workbook(infile)
     tb = ex['报告']
@@ -86,9 +83,11 @@ def get_excel_info(infile,flag = '5'):
     dct['name'] = name
     if flag == '5':
         dct['lis_Barcode']   = str(lis_Barcode).split('+')[0].strip()
+        dct['clazz']   = '雄激素5项'
     if flag == '17':
         try:
             dct['lis_Barcode']   = str(lis_Barcode).split('+')[-1].strip()
+            dct['clazz']   = '17α-羟孕酮'
         except Exception as e:
             print('lenth of lis_Barcode is less than 2 ')
             print(lis_Barcode)
@@ -328,7 +327,9 @@ def main_send_2type(excel_file_path):
         result = tree[0][0][0].text.strip()
         result = result.replace('\n','')
         result_info =  f'''{dct['name']}-{dct['lis_Barcode']} 的发送结果: {result}\n;  '''
-        report = Reports.query.filter_by(lis_Barcode=dct['lis_Barcode']  ).first()
+        report = Reports.query.filter_by(lis_Barcode=dct['lis_Barcode'].strip()  )\
+                     .filter(Reports.delete_at== None)\
+                     .first()
         if not report :
             report = Reports()
             report.create_time = datetime.now()

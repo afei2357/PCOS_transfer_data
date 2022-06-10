@@ -2,11 +2,13 @@
 import os,random,sys,re
 from datetime import datetime
 import shutil
+from app.views.auth import token_auth
+from app import db
 #import pysnooper 
 
 from flask import  Flask,jsonify,request,make_response,render_template,flash,redirect,url_for,abort,send_from_directory
 from app.configs.config import basedir
-from app.models.product import Reports 
+from app.models.models_pcos import Reports 
 from app.utils.utils import if_not_exist_file_mkdir
 from app.utils.utils_pcos import *
 import requests
@@ -17,7 +19,7 @@ from . import pcosView
 basepath = os.path.join(basedir,'work_dir/pcos')
 
 @pcosView.route('/pcosView/pcos/',methods=['GET','POST'])
-#@pysnooper.snoop(prefix='-chip- \t')
+#@token_auth.login_required
 def pcos():
     if request.method == 'GET':
         return render_template('pcos.html', contents=u'pcos妇幼',title="pcos",next_view='/pcosView/pcos/')
@@ -27,11 +29,6 @@ def pcos():
         # excel 是上传的Excel文件
         zipfile = files.get('file')
         print('ziofile----')
-        print(request.form)
-        print('request.form')
-        print(request.args)
-        print(request.values)
-        print(request.files)
         print(zipfile)
         if not (zipfile) :
             return 'please upload a zip file  !'
@@ -51,7 +48,6 @@ def pcos():
         result_info = []
         for xls in files:
             result_info.append( main_send_2type(xls)  )
-            #pass
         
         print('zip_full_path--------')
         print(zip_full_path)
@@ -59,26 +55,36 @@ def pcos():
         print(unzip_path)
 
         print(files)
-        flash(  u" 项目后台地址：\n    " )
-        flash(  str(project_dir) )
-        flash(  u" 各个报告的发送结果如下：  " )
-        
-        for info in result_info:
-            flash(  info  )
-        return redirect(url_for('pcosView.pcos'))
-        #return  u"</p> 项目正在运行，运行完毕后会自动发送邮件. </p> </p>接收报告的邮箱地址：</p>" + email+ "</p></p>项目后台地址：</p>    "+str(project_dir)
+        return jsonify({'code': 200, 'infos': result_info})
+    #return redirect(url_for('pcosView.pcos'))
 
-#@pcosView.route('/pcosView/info/',methods=['GET','POST'])
-#@pysnooper.snoop(prefix='-chip- \t')
-#@cross_origin(supports_credentials=True)
 @pcosView.route('/pcosView/list/',methods=['GET','POST'])
+@token_auth.login_required
 def pcos_infos():
+    filter_list = []
+    ### 获取 get过来的信息
     page = request.args.get('page', 1, type=int)
     page_size = request.args.get('page_size', 10, type=int)
+    name = request.args.get('name',type=str, default=None)
+    lis_Barcode = request.args.get('lis_Barcode',type=str, default=None)
+    clazz = request.args.get('clazz',type=str, default=None)
+    info = request.args.get('info',type=str, default=None)
+
+    ### 搜索关键词
+    if lis_Barcode:
+        filter_list.append(Reports.lis_Barcode.like('%'+lis_Barcode+'%'))
+    if name:
+        filter_list.append(Reports.name.like('%'+name+'%'))
+    if clazz:
+        filter_list.append(Reports.clazz.like('%'+clazz+'%'))
+    if info:
+        filter_list.append(Reports.info.like('%'+info+'%'))
 
     #paginate_query = Reports.query.order_by(Reports.id.desc())\
-    paginate_query = Reports.query.order_by(Reports.update_time.desc())\
-            .paginate(page, page_size)
+    paginate_query = Reports.query.filter(*filter_list)\
+                     .filter(Reports.delete_at== None)\
+                     .order_by(Reports.id.desc())\
+                     .paginate(page, page_size)
     datas = paginate_query.items
     print('item data ')
     print( datas)
@@ -92,14 +98,10 @@ def pcos_infos():
     return jsonify({'code': 200, 'infos': data_info})
     #return 'info '
 
-#@pcosView.route('/pcosView/test/',methods=['GET','POST'])
 @pcosView.route('/pcosView/info/',methods=['GET','POST'])
-#@pysnooper.snoop(prefix='-chip- \t')
+@token_auth.login_required
 def test_celery_pcos():
-    #from app.utils.run_imputation import test
-    #test.delay()
     print('in vie')
-    #logger.info('in vie')
     return 'indexView_index\n'
 
 @pcosView.route('/pcos_help/',methods=['GET','POST'])
@@ -123,4 +125,13 @@ def save_upload_file(f,basepath,now,today):
     f.save(upload_path_full)
     return filename,project_dir
 
+
+# 删除一个订单
+@pcosView.route('/pcosView/<int:id>', methods=['DELETE'])
+@token_auth.login_required
+def delete_order_pcos( id):
+    report = Reports.query.get_or_404(id)
+    report.delete_at = datetime.now()
+    db.session.commit()
+    return jsonify({'code': 200, 'msg': "删除成功"})
 
