@@ -20,7 +20,7 @@ def create_app(config=Config):
     app.config.from_object(Config)
     db.init_app(app)
     #cors.init_app(app,supports_credentials=True)
-    CORS(app,resources=r'/*',supports_credentials=True)
+    CORS(app,resources=r'/*',supports_credentials=True,max_age=6000)
     #bootstrap = Bootstrap(app)
     #celery.conf.update(app.config)
 

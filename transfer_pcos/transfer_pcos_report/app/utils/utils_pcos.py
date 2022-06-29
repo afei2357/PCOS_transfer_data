@@ -70,6 +70,19 @@ def get_LisRequest_data(patient_info):
     # return lis_Barcode,blood_time,lis_combine_code,all_lis_item_code
     return dct
    
+def get_excel_type(infile):
+    ex  = load_workbook(infile)
+    tb = ex['报告']
+    lis_Barcode= tb.cell(row=4,column=3).value.strip()
+    lst = str(lis_Barcode).split('+') 
+    flags = list()
+    if lst[0]:
+        flags = ['5']
+    if lst[1]:
+        flags.extend('17')
+    print('----flags=======')
+    print(flags)
+    return flags
 
 # 解析Excel报告的信息,这里的flag有两个，分别是5和17，
 # 如果是5，那就是 “雄激素5项(爱湾)”，如果是17，那就代表“17α-羟孕酮”
@@ -81,6 +94,7 @@ def get_excel_info(infile,flag = '5'):
     lis_Barcode= tb.cell(row=4,column=3).value.strip()
     name = tb.cell(row=4,column=7).value.strip()
     dct['name'] = name
+
     if flag == '5':
         dct['lis_Barcode']   = str(lis_Barcode).split('+')[0].strip()
         dct['clazz']   = '雄激素5项'
@@ -243,20 +257,23 @@ def send_data(dct,data1,result_info,data2):
 </soap:Envelope>
     '''
     encode_data = data1.encode('utf-8') +result_info.encode('utf-8') + data2 +  data3.encode('utf-8')
+    #encode_data = data1.encode('utf-8') +result_info.encode('utf-8') +   data3.encode('utf-8')
     
     headers = {"Host": "10.10.11.196",
             "Content-Type": "text/xml; charset=utf-8",
             "Content-Length": str(len(encode_data)) ,#}
             "SOAPAction": "http://tempuri.org/UploadLisRepData"}
     patient_info = requests.post(f'http://58.62.17.237:4431/ExtReportService', data=encode_data ,headers=headers)
+    patient_info.encoding  =  patient_info.apparent_encoding
 
 
     if not os.path.exists('workdir'):
         os.mkdir('workdir')
-    with open('./workdir/'+ dct.get('lis_Barcode') + '.xml','wb') as fh:
+    out_xml_path = './workdir/'+ dct.get('lis_Barcode') + '.xml'
+    print('out_xml_path-----------')
+    print(out_xml_path)
+    with open(out_xml_path,'wb') as fh:
         fh.write(encode_data)
-    #print('patient_info.text----')    
-    #print(patient_info.text)
     return patient_info.text
 
  #解压一个zip的文件到out_dir目录，在out_dir内自动新建以日期为名的目录。：       
@@ -323,10 +340,23 @@ def main_send_2type(excel_file_path):
         inpdf = excel_file_path.rstrip('xlsx') + 'pdf'
         data2 = get_pdf(inpdf)
         xml = send_data(dct,data1,result_info,data2)
-        tree = ET.fromstring(xml)
-        result = tree[0][0][0].text.strip()
-        result = result.replace('\n','')
-        result_info =  f'''{dct['name']}-{dct['lis_Barcode']} 的发送结果: {result}\n;  '''
+        try :
+            tree = ET.fromstring(xml)
+            result = tree[0][0][0].text.strip()
+            result = result.replace('\n','')
+        except Exception as e :
+            print(e)
+            print('------xml======1')
+            print(xml)
+            print('------xml======2')
+            result = '发送报告的返回结果为404找不到网页了,'
+            with open('./workdir/'+ dct.get('lis_Barcode') + '.err','w',encoding='utf-8') as fh:
+                fh.write(xml)
+        result_dict = {}
+        result_dict['lis_Barcode'] = dct['lis_Barcode']
+        result_dict['name'] = dct['name']
+        result_dict['result'] = result
+        #result_info =  f'''{dct['name']}-{dct['lis_Barcode']} 的发送结果: {result}\n;  '''
         report = Reports.query.filter_by(lis_Barcode=dct['lis_Barcode'].strip()  )\
                      .filter(Reports.delete_at== None)\
                      .first()
@@ -336,8 +366,16 @@ def main_send_2type(excel_file_path):
             db.session.add(report)
         report.from_dict(dct)
         report.info = result
-        return result_info 
-    result_info = send_1type('5')
-    result_info += send_1type('17')    
+        #return result_info 
+        return result_dict 
+    result_lst = []
+    flags = get_excel_type(excel_file_path)
+    for flag in flags:
+        result_lst.append( send_1type(flag) )
+    if len(result_lst) < 2:
+        result_lst.append('')
+    #result_lst.append( send_1type('5') )
+    #result_lst.append( send_1type('17') )
     db.session.commit()
-    return result_info
+    #return result_info
+    return result_lst

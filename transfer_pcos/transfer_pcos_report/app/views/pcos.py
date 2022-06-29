@@ -18,8 +18,8 @@ from . import pcosView
 
 basepath = os.path.join(basedir,'work_dir/pcos')
 
-@pcosView.route('/pcosView/pcos/',methods=['GET','POST'])
-#@token_auth.login_required
+@pcosView.route('/api/pcos',methods=['GET','POST'])
+@token_auth.login_required
 def pcos():
     if request.method == 'GET':
         return render_template('pcos.html', contents=u'pcos妇幼',title="pcos",next_view='/pcosView/pcos/')
@@ -45,11 +45,17 @@ def pcos():
         #out_result_path = unzip_file(zip_full_path,unzip_path)
         unzip_file(zip_full_path,unzip_path)
         files = list_all_files(unzip_path)
+        result_info_tmp = []
         result_info = []
         for xls in files:
-            result_info.append( main_send_2type(xls)  )
+            result_info_tmp.append( main_send_2type(xls)  )
         
-        print('zip_full_path--------')
+        for lst1,lst2 in result_info_tmp:
+            result_info.append(lst1)
+            result_info.append(lst2)
+        print('zip_full_path1--------')
+        print(result_info) 
+        print('zip_full_path2--------')
         print(zip_full_path)
         print(project_dir)
         print(unzip_path)
@@ -58,9 +64,11 @@ def pcos():
         return jsonify({'code': 200, 'infos': result_info})
     #return redirect(url_for('pcosView.pcos'))
 
-@pcosView.route('/pcosView/list/',methods=['GET','POST'])
+#@pcosView.route('/pcosView/list_all',methods=['GET','POST','OPTIONS'])
+@pcosView.route('/api/list',methods=['GET','POST'])
 @token_auth.login_required
 def pcos_infos():
+    print('aaaa')
     filter_list = []
     ### 获取 get过来的信息
     page = request.args.get('page', 1, type=int)
@@ -95,10 +103,16 @@ def pcos_infos():
                         'total_pages': paginate_query.pages,
                         'total_items': paginate_query.total
                     }}
+    #headers = {
+    #    'Content-Type': 'application/json',
+    #    'Access-Control-Allow-Origin': '*',
+    #    'Access-Control-Allow-Methods': '*',
+    #    'Access-Control-Allow-Headers': '*',
+    #}
     return jsonify({'code': 200, 'infos': data_info})
-    #return 'info '
 
-@pcosView.route('/pcosView/info/',methods=['GET','POST'])
+@pcosView.route('/pcosView/info',methods=['GET','POST'])
+@pcosView.route('/pcosView/list2',methods=['GET','POST'])
 @token_auth.login_required
 def test_celery_pcos():
     print('in vie')
@@ -127,7 +141,7 @@ def save_upload_file(f,basepath,now,today):
 
 
 # 删除一个订单
-@pcosView.route('/pcosView/<int:id>', methods=['DELETE'])
+@pcosView.route('/api/pcosView/<int:id>', methods=['DELETE'])
 @token_auth.login_required
 def delete_order_pcos( id):
     report = Reports.query.get_or_404(id)
