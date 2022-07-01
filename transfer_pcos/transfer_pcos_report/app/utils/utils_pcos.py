@@ -75,11 +75,14 @@ def get_excel_type(infile):
     tb = ex['报告']
     lis_Barcode= tb.cell(row=4,column=3).value.strip()
     lst = str(lis_Barcode).split('+') 
+    print('all str(lis_Barcode)1-------')
+    print(str(lis_Barcode))
+    print('all str(lis_Barcode)2---------')
     flags = list()
     if lst[0]:
         flags = ['5']
     if lst[1]:
-        flags.extend('17')
+        flags.append('17')
     print('----flags=======')
     print(flags)
     return flags
@@ -269,6 +272,9 @@ def send_data(dct,data1,result_info,data2):
 
     if not os.path.exists('workdir'):
         os.mkdir('workdir')
+    print('get dct.get lis_Barcode1 ')
+    print(dct.get('lis_Barcode'))
+    print('get dct.get lis_Barcode2 ')
     out_xml_path = './workdir/'+ dct.get('lis_Barcode') + '.xml'
     print('out_xml_path-----------')
     print(out_xml_path)
