@@ -34,7 +34,7 @@ class Config():
     # celery配置：
     CELERY_BACKEND = 'redis://localhost:6379'
     CELERY_BROKER = 'redis://localhost:6379'
-
+    MAPPING_DIR = os.path.join(config_dir,'mapping.ini')
 view_dict = {
     'pcosView.pcos':u'发送pcos报告至妇幼保健院信息科',
 }

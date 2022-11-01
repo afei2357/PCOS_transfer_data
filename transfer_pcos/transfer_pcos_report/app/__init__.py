@@ -16,7 +16,7 @@ db = SQLAlchemy()
 
 def create_app(config=Config):
     app = Flask(__name__)
-    from app.views import pcosView
+    from app.views import api
     app.config.from_object(Config)
     db.init_app(app)
     #cors.init_app(app,supports_credentials=True)
@@ -24,7 +24,8 @@ def create_app(config=Config):
     #bootstrap = Bootstrap(app)
     #celery.conf.update(app.config)
 
-    app.register_blueprint(pcosView)
+    #app.register_blueprint(pcosView)
+    app.register_blueprint(api)
 
     return app
 

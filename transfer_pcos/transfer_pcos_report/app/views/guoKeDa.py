@@ -4,25 +4,69 @@ from datetime import datetime
 import shutil
 from app.views.auth import token_auth
 from app import db
+from app.configs.config import Config  
 #import pysnooper 
 
 from flask import  Flask,jsonify,request,make_response,render_template,flash,redirect,url_for,abort,send_from_directory
 from app.configs.config import basedir
 from app.models.models_pcos import Reports 
 from app.utils.utils import if_not_exist_file_mkdir
-from app.utils.utils_pcos import *
+from app.utils.utils_guoKeDa import get_patient_infos,parser_config_to_json,change_dct_key
 import requests
+import json
 from flask_cors import cross_origin
 
 from . import api 
 
-basepath = os.path.join(basedir,'work_dir/pcos')
+basepath = os.path.join(basedir,'work_dir/guoKeDa')
 
-@api.route('/api/pcos',methods=['GET','POST'])
+@api.route('/get_patient_info',methods=['GET'])
+def get_patient_info():
+    patient_id = request.args.get('patient_id',type=str, default=None)
+    result = get_patient_infos(patient_id)
+    return result
+
+
+@api.route('/send_result',methods=['GET'])
+def send_result():
+    #old_json = ''
+    with open('/var/www/PCOS_transfer_data/transfer_pcos/transfer_pcos_report/app/views/test_remote_json.json') as fh:
+        old_json = fh.read()
+    old_dct = json.loads(old_json)
+
+    config_ini_file  = Config.MAPPING_DIR
+    print(config_ini_file)
+    hospital_name  = 'guoKeDa'
+    config = parser_config_to_json(config_ini_file )
+    new_dct = change_dct_key(hospital_name,config,old_dct)
+    data = json.dumps(new_dct)
+    with open('/var/www/PCOS_transfer_data/transfer_pcos/transfer_pcos_report/app/views/no_right.json','w') as out:
+        out.write(data)
+    #data = ''
+    #with open('/var/www/PCOS_transfer_data/transfer_pcos/test/right.txt') as fh:
+    #    data = fh.read()
+        # 拼接成json格式的字符串
+    #data = data1_json_strip + data2.decode('utf-8') + '"}'
+    # print(data)
+    # 发送报告
+    xml_data = f'<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/"><soapenv:Header/><soapenv:Body><tem:LisMainInterface><tem:methodName>WSBG</tem:methodName><tem:inParam>{data}</tem:inParam><tem:paramType>1</tem:paramType></tem:LisMainInterface></soapenv:Body></soapenv:Envelope>'
+    
+    headers = {"Content-Length": str(len(xml_data)),"Accept-Encoding":"gzip,deflate",'Content-Type':'text/xml;charset=UTF-8','SOAPActiom':"http://tempuri.org/LisMainInterface",'Host':'weixin.ucasszh.cn:8007','User-Agent':'Apache-HttpClient/4.1.1 (java 1.5)'}
+    # 执行发送
+    ret = requests.post('https://weixin.ucasszh.cn:8007/Interface/LisOnlineInterface.asmx?wsdl',data=xml_data,headers=headers)
+    print(headers)
+    print(ret)
+    print(ret.text)
+
+    return ret.text
+
+
+# 下列代码不在使用
+@api.route('/api/guoKeDa',methods=['GET','POST'])
 @token_auth.login_required
-def pcos():
+def guoKeDa():
     if request.method == 'GET':
-        return render_template('pcos.html', contents=u'pcos妇幼',title="pcos",next_view='/pcosView/pcos/')
+        return render_template('guoKeDa.html', contents=u'pcos妇幼',title="pcos",next_view='/api/guoKeDa/')
     else:
         # 获取Excel文件:
         files = request.files.to_dict()
@@ -47,8 +91,8 @@ def pcos():
         files = list_all_files(unzip_path)
         result_info_tmp = []
         result_info = []
-        for xls in files:
-            result_info_tmp.append( main_send_2type(xls)  )
+        #for xls in files:
+        #    result_info_tmp.append( main_send_2type(xls)  )
         
         for lst1,lst2 in result_info_tmp:
             result_info.append(lst1)
@@ -111,8 +155,8 @@ def pcos_infos():
     #}
     return jsonify({'code': 200, 'infos': data_info})
 
-@api.route('/pcosView/info',methods=['GET','POST'])
-@api.route('/pcosView/list2',methods=['GET','POST'])
+@api.route('/api/info',methods=['GET','POST'])
+@api.route('/api/list2',methods=['GET','POST'])
 @token_auth.login_required
 def test_celery_pcos():
     print('in vie')

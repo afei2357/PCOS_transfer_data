@@ -2,6 +2,7 @@
 import os,json
 from flask_sqlalchemy import SQLAlchemy
 #from app import create_app,db,celery
+from flask import request,Response
 from app import create_app,db
 #from flask_script import Manager
 #from flask_mail import Mail
@@ -9,7 +10,15 @@ from app import create_app,db
  
 app = create_app()
 app.debug = True
-#mail = Mail(app)
+#@app.before_request
+#def before():
+#    print("------ before_request ------")
+#    print("1=====================")
+#    print(request.url)
+#    print(request.method)
+#    print(request.headers)
+#    print("2=====================")
+##mail = Mail(app)
 
 
 CSRF_ENABLED = True

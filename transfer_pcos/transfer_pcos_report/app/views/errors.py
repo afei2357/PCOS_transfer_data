@@ -1,6 +1,6 @@
 from flask import jsonify
 from werkzeug.http import HTTP_STATUS_CODES
-from app.views import pcosView
+from app.views import api
 from app import db
 
 
@@ -19,12 +19,12 @@ def bad_request(message):
     return error_response(400, message)
 
 
-@pcosView.app_errorhandler(404)
+@api.app_errorhandler(404)
 def not_found_error(error):
     return error_response(404)
 
 
-@pcosView.app_errorhandler(500)
+@api.app_errorhandler(500)
 def internal_error(error):
     db.session.rollback()
     return error_response(500,'internal_error')
