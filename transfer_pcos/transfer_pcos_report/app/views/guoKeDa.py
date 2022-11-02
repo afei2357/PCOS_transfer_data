@@ -23,8 +23,8 @@ basepath = os.path.join(basedir,'work_dir/guoKeDa')
 
 @api.route('/api/get_patient_info',methods=['GET'])
 def get_patient_info():
-    patient_id = request.args.get('patient_id',type=str, default=None)
-    ret = get_patient_infos(patient_id)
+    barcode = request.args.get('barcode',type=str, default=None)
+    ret = get_patient_infos(barcode)
     xml = ret.text
     try :
         tree = ET.fromstring(xml)
@@ -36,12 +36,12 @@ def get_patient_info():
         print('------xml======1')
         print(e)
         print(xml)
-        result = {'resultCode': -1, 'resultMsg': '','msg':'fail'}
+        result = {'resultCode': -1, 'resultMsg': '','msg':'send_fail'}
 
     return jsonify(result)
 
 
-@api.route('/api/send_result',methods=['POST'])
+@api.route('/api/send_report',methods=['POST'])
 def send_result():
     #old_json = request.get_json()
     old_json = request.data
@@ -70,12 +70,12 @@ def send_result():
         result = tree[0][0][0].text.strip()
         result = result.replace('\n','')
         result = json.loads(result)
-        result['msg'] = 'success'
+        result['msg'] = 'send_success'
     except Exception as e :
         print(e)
         print('------xml======1')
         print(xml)
-        result = {'resultCode': -1, 'resultMsg': '','msg':'fail'}
+        result = {'resultCode': -1, 'resultMsg': '','msg':'send_fail'}
 
     return jsonify(result)
 
