@@ -15,39 +15,46 @@ from app.utils.utils_guoKeDa import get_patient_infos,parser_config_to_json,chan
 import requests
 import json
 from flask_cors import cross_origin
+from xml.etree import ElementTree  as ET
 
 from . import api 
 
 basepath = os.path.join(basedir,'work_dir/guoKeDa')
 
-@api.route('/get_patient_info',methods=['GET'])
+@api.route('/api/get_patient_info',methods=['GET'])
 def get_patient_info():
     patient_id = request.args.get('patient_id',type=str, default=None)
-    result = get_patient_infos(patient_id)
-    return result
+    ret = get_patient_infos(patient_id)
+    xml = ret.text
+    try :
+        tree = ET.fromstring(xml)
+        result = tree[0][0][0].text.strip()
+        result = result.replace('\n','')
+        result = json.loads(result)
+        result['msg'] = 'success'
+    except Exception as e :
+        print('------xml======1')
+        print(e)
+        print(xml)
+        result = {'resultCode': -1, 'resultMsg': '','msg':'fail'}
+
+    return jsonify(result)
 
 
-@api.route('/send_result',methods=['GET'])
+@api.route('/api/send_result',methods=['POST'])
 def send_result():
-    #old_json = ''
-    with open('/var/www/PCOS_transfer_data/transfer_pcos/transfer_pcos_report/app/views/test_remote_json.json') as fh:
-        old_json = fh.read()
+    #old_json = request.get_json()
+    old_json = request.data
     old_dct = json.loads(old_json)
 
+    # 读取配制文件
     config_ini_file  = Config.MAPPING_DIR
-    print(config_ini_file)
     hospital_name  = 'guoKeDa'
     config = parser_config_to_json(config_ini_file )
     new_dct = change_dct_key(hospital_name,config,old_dct)
     data = json.dumps(new_dct)
     with open('/var/www/PCOS_transfer_data/transfer_pcos/transfer_pcos_report/app/views/no_right.json','w') as out:
         out.write(data)
-    #data = ''
-    #with open('/var/www/PCOS_transfer_data/transfer_pcos/test/right.txt') as fh:
-    #    data = fh.read()
-        # 拼接成json格式的字符串
-    #data = data1_json_strip + data2.decode('utf-8') + '"}'
-    # print(data)
     # 发送报告
     xml_data = f'<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/"><soapenv:Header/><soapenv:Body><tem:LisMainInterface><tem:methodName>WSBG</tem:methodName><tem:inParam>{data}</tem:inParam><tem:paramType>1</tem:paramType></tem:LisMainInterface></soapenv:Body></soapenv:Envelope>'
     
@@ -57,8 +64,20 @@ def send_result():
     print(headers)
     print(ret)
     print(ret.text)
+    xml = ret.text
+    try :
+        tree = ET.fromstring(xml)
+        result = tree[0][0][0].text.strip()
+        result = result.replace('\n','')
+        result = json.loads(result)
+        result['msg'] = 'success'
+    except Exception as e :
+        print(e)
+        print('------xml======1')
+        print(xml)
+        result = {'resultCode': -1, 'resultMsg': '','msg':'fail'}
 
-    return ret.text
+    return jsonify(result)
 
 
 # 下列代码不在使用

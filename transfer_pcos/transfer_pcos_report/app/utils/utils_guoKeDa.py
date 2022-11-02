@@ -18,9 +18,7 @@ def get_patient_infos(barcode):
     encode_data = data
     headers = {"Content-Length": str(len(encode_data)),"Accept-Encoding":"gzip,deflate",'Content-Type':'text/xml;charset=UTF-8','SOAPActiom':"http://tempuri.org/LisMainInterface",'Host':'weixin.ucasszh.cn:8007','User-Agent':'Apache-HttpClient/4.1.1 (java 1.5)'}
     ret = rq.post('https://weixin.ucasszh.cn:8007/Interface/LisOnlineInterface.asmx?wsdl',data=data,headers=headers)
-    # print(ret)
-    print(ret.text)
-    return ret.text
+    return ret
 
 # 从一个ini配置文件里，拿到变量映射的关系，返回字典形式的映射关系
 def parser_config_to_json(f_ini ):
