@@ -3,13 +3,13 @@ import os,random,sys,re
 from datetime import datetime
 import shutil
 from app.views.auth import token_auth
-from app import db
+#from app import db
 from app.configs.config import Config  
 #import pysnooper 
 
 from flask import  Flask,jsonify,request,make_response,render_template,flash,redirect,url_for,abort,send_from_directory
 from app.configs.config import basedir
-from app.models.models_pcos import Reports 
+#from app.models.models_pcos import Reports 
 from app.utils.utils import if_not_exist_file_mkdir
 from app.utils.utils_guoKeDa import get_patient_infos,parser_config_to_json,change_dct_key
 import requests
@@ -127,52 +127,52 @@ def guoKeDa():
         return jsonify({'code': 200, 'infos': result_info})
     #return redirect(url_for('pcosView.pcos'))
 
-#@pcosView.route('/pcosView/list_all',methods=['GET','POST','OPTIONS'])
-@api.route('/api/list',methods=['GET','POST'])
-@token_auth.login_required
-def pcos_infos():
-    print('aaaa')
-    filter_list = []
-    ### 获取 get过来的信息
-    page = request.args.get('page', 1, type=int)
-    page_size = request.args.get('page_size', 10, type=int)
-    name = request.args.get('name',type=str, default=None)
-    lis_Barcode = request.args.get('lis_Barcode',type=str, default=None)
-    clazz = request.args.get('clazz',type=str, default=None)
-    info = request.args.get('info',type=str, default=None)
-
-    ### 搜索关键词
-    if lis_Barcode:
-        filter_list.append(Reports.lis_Barcode.like('%'+lis_Barcode+'%'))
-    if name:
-        filter_list.append(Reports.name.like('%'+name+'%'))
-    if clazz:
-        filter_list.append(Reports.clazz.like('%'+clazz+'%'))
-    if info:
-        filter_list.append(Reports.info.like('%'+info+'%'))
-
-    #paginate_query = Reports.query.order_by(Reports.id.desc())\
-    paginate_query = Reports.query.filter(*filter_list)\
-                     .filter(Reports.delete_at== None)\
-                     .order_by(Reports.id.desc())\
-                     .paginate(page, page_size)
-    datas = paginate_query.items
-    print('item data ')
-    print( datas)
-    data_info ={'items': [item.to_dict() for item in datas], 
-                    '_meta': {
-                        'page': page,
-                        'page_size': page_size,
-                        'total_pages': paginate_query.pages,
-                        'total_items': paginate_query.total
-                    }}
-    #headers = {
-    #    'Content-Type': 'application/json',
-    #    'Access-Control-Allow-Origin': '*',
-    #    'Access-Control-Allow-Methods': '*',
-    #    'Access-Control-Allow-Headers': '*',
-    #}
-    return jsonify({'code': 200, 'infos': data_info})
+##@pcosView.route('/pcosView/list_all',methods=['GET','POST','OPTIONS'])
+#@api.route('/api/list',methods=['GET','POST'])
+#@token_auth.login_required
+#def pcos_infos():
+#    print('aaaa')
+#    filter_list = []
+#    ### 获取 get过来的信息
+#    page = request.args.get('page', 1, type=int)
+#    page_size = request.args.get('page_size', 10, type=int)
+#    name = request.args.get('name',type=str, default=None)
+#    lis_Barcode = request.args.get('lis_Barcode',type=str, default=None)
+#    clazz = request.args.get('clazz',type=str, default=None)
+#    info = request.args.get('info',type=str, default=None)
+#
+#    ### 搜索关键词
+#    if lis_Barcode:
+#        filter_list.append(Reports.lis_Barcode.like('%'+lis_Barcode+'%'))
+#    if name:
+#        filter_list.append(Reports.name.like('%'+name+'%'))
+#    if clazz:
+#        filter_list.append(Reports.clazz.like('%'+clazz+'%'))
+#    if info:
+#        filter_list.append(Reports.info.like('%'+info+'%'))
+#
+#    #paginate_query = Reports.query.order_by(Reports.id.desc())\
+#    paginate_query = Reports.query.filter(*filter_list)\
+#                     .filter(Reports.delete_at== None)\
+#                     .order_by(Reports.id.desc())\
+#                     .paginate(page, page_size)
+#    datas = paginate_query.items
+#    print('item data ')
+#    print( datas)
+#    data_info ={'items': [item.to_dict() for item in datas], 
+#                    '_meta': {
+#                        'page': page,
+#                        'page_size': page_size,
+#                        'total_pages': paginate_query.pages,
+#                        'total_items': paginate_query.total
+#                    }}
+#    #headers = {
+#    #    'Content-Type': 'application/json',
+#    #    'Access-Control-Allow-Origin': '*',
+#    #    'Access-Control-Allow-Methods': '*',
+#    #    'Access-Control-Allow-Headers': '*',
+#    #}
+#    return jsonify({'code': 200, 'infos': data_info})
 
 @api.route('/api/info',methods=['GET','POST'])
 @api.route('/api/list2',methods=['GET','POST'])
@@ -209,6 +209,6 @@ def save_upload_file(f,basepath,now,today):
 def delete_order_pcos( id):
     report = Reports.query.get_or_404(id)
     report.delete_at = datetime.now()
-    db.session.commit()
+    #db.session.commit()
     return jsonify({'code': 200, 'msg': "删除成功"})
 

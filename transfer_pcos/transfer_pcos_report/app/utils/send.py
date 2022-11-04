@@ -9,5 +9,5 @@ with open(file,'r' ) as  fh:
 
 #ret = rq.post('http://1.14.160.227:7000/send_result',data=j,headers=headers)
 #ret = rq.post('http://1.14.160.227:7000/api/send_result',data=j)
-ret = rq.get('http://1.14.160.227:7000/api/get_patient_info?patient_id=20255295401')
+ret = rq.get('http://127.0.0.1:7000/api/get_patient_info?barcode=20255295401')
 print(ret.text)

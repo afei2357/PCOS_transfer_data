@@ -1,7 +1,7 @@
 from flask import jsonify
 from werkzeug.http import HTTP_STATUS_CODES
 from app.views import api
-from app import db
+#from app import db
 
 
 def error_response(status_code, message=None):
@@ -26,5 +26,5 @@ def not_found_error(error):
 
 @api.app_errorhandler(500)
 def internal_error(error):
-    db.session.rollback()
+    #db.session.rollback()
     return error_response(500,'internal_error')

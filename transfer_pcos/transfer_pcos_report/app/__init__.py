@@ -12,13 +12,13 @@ from flask_cors import CORS
 #celery_logger = get_task_logger('run_celery_logger')
 #cors = CORS(supports_credentials=True)
 cors = CORS()
-db = SQLAlchemy()
+#db = SQLAlchemy()
 
 def create_app(config=Config):
     app = Flask(__name__)
     from app.views import api
     app.config.from_object(Config)
-    db.init_app(app)
+    #db.init_app(app)
     #cors.init_app(app,supports_credentials=True)
     CORS(app,resources=r'/*',supports_credentials=True,max_age=6000)
     #bootstrap = Bootstrap(app)

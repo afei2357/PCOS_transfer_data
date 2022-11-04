@@ -3,7 +3,7 @@ import os,json
 from flask_sqlalchemy import SQLAlchemy
 #from app import create_app,db,celery
 from flask import request,Response
-from app import create_app,db
+from app import create_app#,db
 #from flask_script import Manager
 #from flask_mail import Mail
 
@@ -24,9 +24,6 @@ app.debug = True
 CSRF_ENABLED = True
 #manager = Manager(app)
  
-#@manager.shell
-def make_shell_context():
-    return dict(app=app,db=db)
 
 
 #@manager.command
@@ -41,7 +38,7 @@ def run_shell():
 
 def run_main():
     try:
-        db.create_all(app=app)
+        #db.create_all(app=app)
         print('-------------')
         print (' the web site is : ')
         print("http://1.14.160.227:7000")
