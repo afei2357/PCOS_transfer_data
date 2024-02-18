@@ -25,7 +25,14 @@ basepath = os.path.join(basedir,'work_dir/guoKeDa')
 def get_patient_info():
     barcode = request.args.get('barcode',type=str, default=None)
     ret = get_patient_infos(barcode)
+    print('ret---1')
+    print('barcode')
+    print(barcode)
+    print(ret)
     xml = ret.text
+    print(xml)
+    print('xml---2')
+
     try :
         tree = ET.fromstring(xml)
         result = tree[0][0][0].text.strip()
@@ -33,9 +40,11 @@ def get_patient_info():
         result = json.loads(result)
         result['msg'] = 'success'
     except Exception as e :
-        print('------xml======1')
+        print('1------xml======1')
         print(e)
+        print('the xml is : ')
         print(xml)
+        print('2------xml======1')
         result = {'resultCode': -1, 'resultMsg': '','msg':'send_fail'}
 
     return jsonify(result)
@@ -46,6 +55,7 @@ def send_result():
     #old_json = request.get_json()
     old_json = request.data
     old_dct = json.loads(old_json)
+    print('get_json')
 
     # 读取配制文件
     config_ini_file  = Config.MAPPING_DIR
@@ -57,12 +67,17 @@ def send_result():
         out.write(data)
     # 发送报告
     xml_data = f'<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/"><soapenv:Header/><soapenv:Body><tem:LisMainInterface><tem:methodName>WSBG</tem:methodName><tem:inParam>{data}</tem:inParam><tem:paramType>1</tem:paramType></tem:LisMainInterface></soapenv:Body></soapenv:Envelope>'
+    with open('/var/www/PCOS_transfer_data/transfer_pcos/transfer_pcos_report/app/views/send_xml_data.xml','w') as out:
+        out.write(xml_data)
     
     headers = {"Content-Length": str(len(xml_data)),"Accept-Encoding":"gzip,deflate",'Content-Type':'text/xml;charset=UTF-8','SOAPActiom':"http://tempuri.org/LisMainInterface",'Host':'weixin.ucasszh.cn:8007','User-Agent':'Apache-HttpClient/4.1.1 (java 1.5)'}
     # 执行发送
     ret = requests.post('https://weixin.ucasszh.cn:8007/Interface/LisOnlineInterface.asmx?wsdl',data=xml_data,headers=headers)
+    print('headers:')
     print(headers)
-    print(ret)
+    #print('ret:')
+    #print(ret)
+    print('ret.text:')
     print(ret.text)
     xml = ret.text
     try :
@@ -72,8 +87,8 @@ def send_result():
         result = json.loads(result)
         result['msg'] = 'send_success'
     except Exception as e :
+        print('------xml======send_report：')
         print(e)
-        print('------xml======1')
         print(xml)
         result = {'resultCode': -1, 'resultMsg': '','msg':'send_fail'}
 

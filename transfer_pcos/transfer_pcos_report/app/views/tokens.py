@@ -7,8 +7,10 @@ from app import db
 
 
 @pcosView.route('/user/login', methods=['POST'])
-##@basic_auth.login_required
+@basic_auth.login_required
 def get_token():
+    print('-------------data' )
+    print(data )
     data = request.get_json()
     user = User.query.filter_by(username=data['username']).first()
     if not user:
